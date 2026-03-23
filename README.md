@@ -1,6 +1,6 @@
 # Kid App
 
-Production-minded SaaS startup build, developed in small safe increments.
+Production-minded build for a kid-friendly educational web app, developed in small safe increments.
 
 ## Operating Rules
 
@@ -11,13 +11,14 @@ Production-minded SaaS startup build, developed in small safe increments.
 
 ## Current Status
 
-The repository baseline is set up, but the application has not been scaffolded yet.
+The repository baseline and MVP product definition are set up, and the first web app shell is being scaffolded.
 
-## Initial Assumptions
+## Product Direction
 
-- We will build a web-based SaaS product.
-- We will optimize for a conventional full-stack TypeScript architecture unless the codebase later requires a different choice.
-- We will add infrastructure only when it is justified by an immediate product need.
+- The first product is a browser-first educational app for young kids.
+- The initial learning modes are flashcards and pair matching.
+- The first content packs are animals and fruits.
+- The monetization path is free starter content plus premium content unlocks.
 
 ## Working Approach
 
@@ -31,7 +32,17 @@ The repository baseline is set up, but the application has not been scaffolded y
 - `README.md`: project overview and setup notes.
 - `docs/prompt-updates.md`: chronological log of user prompts and operating requests.
 - `docs/architecture.md`: lightweight product and technical direction.
+- `docs/mvp-spec.md`: one-page MVP definition for the first releasable version.
+- `src/`: app source for the browser-first MVP.
+
+## Stack
+
+- Vite
+- React
+- TypeScript
+
+This is the simplest maintainable option for a browser-first MVP with no immediate backend requirements.
 
 ## Next Suggested Step
 
-Scaffold the first application runtime and choose the initial product slice to build.
+Install dependencies, run the app locally, and implement the core flashcard loop for animals first.

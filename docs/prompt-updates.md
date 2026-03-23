@@ -21,3 +21,11 @@ Rules:
 ### Prompt 002
 
 Help me choose a SaaS startup idea that is realistic for a solo founder My goals: - kid friendly games to build their education - different game types: flashcard animal, flashcard fruits - Pair games - Simplest MVP - initial version is a web app, but it can be wrapped to iOS app Extension - in-app purchase for certain feature
+
+### Prompt 003
+
+go ahead
+
+### Prompt 004
+
+look good so far. next
