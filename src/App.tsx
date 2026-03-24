@@ -118,6 +118,20 @@ export default function App() {
     }
   };
 
+  const handleShuffleFlashcard = () => {
+    if (selectedPack.cards.length < 2) {
+      return;
+    }
+
+    let nextIndex = currentCardIndex;
+
+    while (nextIndex === currentCardIndex) {
+      nextIndex = Math.floor(Math.random() * selectedPack.cards.length);
+    }
+
+    setCurrentCardIndex(nextIndex);
+  };
+
   const handleResetMatchGame = () => {
     setFlippedTileIds([]);
     setMatchMoves(0);
@@ -196,6 +210,9 @@ export default function App() {
           <div className="flashcard-actions">
             <button onClick={handlePrevious} type="button" disabled={!canGoBack}>
               Back
+            </button>
+            <button onClick={handleShuffleFlashcard} type="button">
+              Shuffle
             </button>
             <button onClick={handleNext} type="button" disabled={!canGoForward}>
               Next

@@ -3,8 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
   color: #17324d;
-  background:
-    linear-gradient(180deg, #21b7ba 0 200px, #f4f6fb 200px 100%);
+  background: linear-gradient(180deg, #21b7ba 0 200px, #f4f6fb 200px 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -74,7 +73,6 @@ button {
 .section-menu {
   display: flex;
   gap: 22px;
-  overflow-x: auto;
   padding: 22px 2px 0;
   border-bottom: 4px solid rgba(255, 255, 255, 0.22);
 }

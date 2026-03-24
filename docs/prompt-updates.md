@@ -85,3 +85,11 @@ make the flashcard items at least 2 column layout in mobile view
 ### Prompt 017
 
 add page naivatin view. i.e. User Click on Flashanimal, then user sees a new page view. Currently it is a single page view.
+
+### Prompt 018
+
+add new flashcard section: First words. Baby first common words: such as books, clothes, table, chair. Can we have at least 30 items.
+
+### Prompt 019
+
+Add a shuffle button in between back and next.
