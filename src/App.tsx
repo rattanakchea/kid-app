@@ -13,6 +13,19 @@ type MatchTile = {
   solved: boolean;
 };
 
+const sections: { id: GameMode; label: string; subtitle: string }[] = [
+  {
+    id: "flashcards",
+    label: "Flashcards",
+    subtitle: "Tap through bright first-word cards"
+  },
+  {
+    id: "match",
+    label: "Pair Games",
+    subtitle: "Find matching emoji pairs"
+  }
+];
+
 function shuffleTiles<T>(items: T[]) {
   const nextItems = [...items];
 
@@ -27,9 +40,7 @@ function shuffleTiles<T>(items: T[]) {
   return nextItems;
 }
 
-function createMatchTiles(
-  pack: (typeof freePacks)[number],
-): MatchTile[] {
+function createMatchTiles(pack: (typeof freePacks)[number]): MatchTile[] {
   return shuffleTiles(
     pack.cards.slice(0, matchTileCount).flatMap((card) => [
       {
@@ -58,6 +69,9 @@ export default function App() {
 
   const selectedPack =
     packs.find((pack) => pack.id === selectedPackId) ?? freePacks[0];
+
+  const currentSection =
+    sections.find((section) => section.id === gameMode) ?? sections[0];
 
   const currentCard = selectedPack.cards[currentCardIndex];
   const canGoBack = currentCardIndex > 0;
@@ -153,76 +167,104 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <header className="hero">
-        <p className="eyebrow">Kid-friendly MVP</p>
-        <h1>Playful first words for little learners</h1>
-        <p className="hero-copy">
-          A simple browser-first learning app with flashcards and a first
-          matching game built from the same learning packs.
-        </p>
+      <header className="topbar">
+        <div className="topbar-row">
+          <div className="topbar-title-group">
+            <p className="topbar-eyebrow">Little learners</p>
+            <h1>{currentSection.label}</h1>
+          </div>
+          <div className="topbar-actions" aria-hidden="true">
+            <span>⌕</span>
+            <span>♡</span>
+            <span>☰</span>
+          </div>
+        </div>
+
+        <nav className="section-menu" aria-label="Game sections">
+          {sections.map((section) => (
+            <button
+              key={section.id}
+              className={`section-tab${gameMode === section.id ? " active" : ""}`}
+              onClick={() => handleSelectMode(section.id)}
+              type="button"
+            >
+              {section.label}
+            </button>
+          ))}
+        </nav>
       </header>
 
-      <main className="layout">
-        <section className="panel">
+      <main className="home-layout">
+        <section className="subitem-panel">
           <div className="section-heading">
-            <h2>Choose a pack</h2>
-            <p>Start with free packs. Premium packs stay visible but locked.</p>
+            <h2>{currentSection.label}</h2>
+            <p>{currentSection.subtitle}</p>
           </div>
 
-          <div className="pack-grid">
-            {packs.map((pack) => {
-              const isActive = pack.id === selectedPackId;
+          <div className="subitem-row" role="tablist" aria-label="Content packs">
+            {freePacks.map((pack) => (
+              <button
+                key={`${gameMode}-${pack.id}`}
+                className={`subitem-chip${selectedPackId === pack.id ? " active" : ""}`}
+                onClick={() => handleSelectPack(pack.id)}
+                type="button"
+              >
+                {pack.title}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <section className="card-grid-panel">
+          <div className="home-card-grid">
+            {freePacks.map((pack) => {
+              const isActive = selectedPackId === pack.id;
+              const footerLabel =
+                gameMode === "flashcards" ? "FLASH CARDS" : "PAIR GAMES";
 
               return (
                 <button
-                  key={pack.id}
-                  className={`pack-card${isActive ? " active" : ""}`}
-                  onClick={() => !pack.locked && handleSelectPack(pack.id)}
+                  key={`${gameMode}-card-${pack.id}`}
+                  className={`home-card${isActive ? " active" : ""}`}
+                  onClick={() => handleSelectPack(pack.id)}
                   type="button"
-                  disabled={pack.locked}
                 >
-                  <span className="pack-title-row">
-                    <span>{pack.title}</span>
-                    {pack.locked ? <span className="pill">Premium</span> : null}
-                  </span>
-                  <span className="pack-description">{pack.description}</span>
+                  <div className={`home-card-top band-${pack.id}`}>
+                    <span className="home-card-heart">{isActive ? "♥" : "♡"}</span>
+                    <span className="home-card-share">↗</span>
+                  </div>
+                  <div className={`home-card-body tint-${pack.id}`}>
+                    <h3>{pack.title}</h3>
+                    <div className="card-stack" aria-hidden="true">
+                      <span className="stack-card stack-left">
+                        {pack.cards[0]?.emoji}
+                      </span>
+                      <span className="stack-card stack-center">
+                        {gameMode === "flashcards"
+                          ? pack.cards[1]?.emoji ?? pack.cards[0]?.emoji
+                          : pack.cards[2]?.emoji ?? pack.cards[0]?.emoji}
+                      </span>
+                      <span className="stack-card stack-right">
+                        {pack.cards[3]?.emoji ?? pack.cards[0]?.emoji}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="home-card-footer">{footerLabel}</div>
                 </button>
               );
             })}
           </div>
-
-          <div className="section-heading mode-heading">
-            <h2>Choose a game</h2>
-            <p>Keep the game loop simple and switch modes without leaving the page.</p>
-          </div>
-
-          <div className="mode-toggle" role="tablist" aria-label="Game mode">
-            <button
-              className={`mode-button${gameMode === "flashcards" ? " active" : ""}`}
-              onClick={() => handleSelectMode("flashcards")}
-              type="button"
-            >
-              Flashcards
-            </button>
-            <button
-              className={`mode-button${gameMode === "match" ? " active" : ""}`}
-              onClick={() => handleSelectMode("match")}
-              type="button"
-            >
-              Pair match
-            </button>
-          </div>
         </section>
 
-        <section className="panel flashcard-panel">
+        <section className="play-panel">
           <div className="section-heading">
             <h2>
-              {selectedPack.title} {gameMode === "flashcards" ? "flashcards" : "pair match"}
+              {selectedPack.title} {gameMode === "flashcards" ? "flashcards" : "pair game"}
             </h2>
             <p>
               {gameMode === "flashcards"
-                ? "Step through the words one by one with a calm, guided flow."
-                : "Match the same emoji pairs using the selected pack content."}
+                ? "Browse the selected set one card at a time."
+                : "Flip tiles and match the same emoji pair."}
             </p>
           </div>
 
@@ -261,8 +303,7 @@ export default function App() {
 
               <div className="match-grid">
                 {matchTiles.map((tile) => {
-                  const isFlipped =
-                    tile.solved || flippedTileIds.includes(tile.id);
+                  const isFlipped = tile.solved || flippedTileIds.includes(tile.id);
 
                   return (
                     <button
@@ -282,10 +323,7 @@ export default function App() {
               </div>
 
               <div className="match-footer">
-                <p>
-                  Find the two matching emoji tiles. The board resets when you
-                  change packs.
-                </p>
+                <p>Find the two matching emoji tiles. The board resets when you change packs.</p>
                 <button onClick={handleResetMatchGame} type="button">
                   Shuffle again
                 </button>
@@ -298,21 +336,6 @@ export default function App() {
               ) : null}
             </>
           )}
-        </section>
-
-        <section className="panel roadmap-panel">
-          <div className="section-heading">
-            <h2>Next slices</h2>
-            <p>Keep the roadmap visible, but stay disciplined about scope.</p>
-          </div>
-
-          <ul className="roadmap-list">
-            <li>Tap-to-hear pronunciation audio</li>
-            <li>Optional harder mode with emoji-to-word matching later</li>
-            <li>Animated success feedback for correct matches</li>
-            <li>Premium unlock flow for extra packs</li>
-            <li>iOS wrapper after web engagement is proven</li>
-          </ul>
         </section>
       </main>
     </div>

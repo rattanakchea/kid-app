@@ -11,7 +11,7 @@ Production-minded build for a kid-friendly educational web app, developed in sma
 
 ## Current Status
 
-The repository baseline and MVP product definition are set up, the web app now includes both flashcards and an initial emoji-to-emoji pair-matching game, and the repo is connected to Vercel for automatic deployments from GitHub pushes.
+The repository baseline and MVP product definition are set up, the web app includes flashcards and an initial emoji-to-emoji pair-matching game, and the home page now uses a mobile-style menu layout with section tabs and pack sub-items inspired by the reference design.
 
 ## Product Direction
 

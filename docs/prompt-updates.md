@@ -67,3 +67,9 @@ add necessary commands to GitHub-to-Vercel connection, in readme.md file
 ### Prompt 013
 
 add deploymnet script package.json file
+
+### Prompt 014
+
+Update the home page: include sections in menu bar, use the attached photo as reference.
+- Flashcard has sub items: Animals, Fruits
+- Pair games has sub items: Animals, Fruits
