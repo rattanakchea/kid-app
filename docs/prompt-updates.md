@@ -51,3 +51,11 @@ build the pair-matching game as the next product slice
 ### Prompt 009
 
 the pair matching game should match emoji to emoji, not with words
+
+### Prompt 010
+
+does it auto deploy to vercel when i push code changes to github
+
+### Prompt 011
+
+yes
