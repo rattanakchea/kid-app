@@ -11,7 +11,7 @@ Production-minded build for a kid-friendly educational web app, developed in sma
 
 ## Current Status
 
-The repository baseline and MVP product definition are set up, and the web app now includes both flashcards and an initial emoji-to-emoji pair-matching game.
+The repository baseline and MVP product definition are set up, the web app now includes both flashcards and an initial emoji-to-emoji pair-matching game, and the repo is connected to Vercel for automatic deployments from GitHub pushes.
 
 ## Product Direction
 
@@ -42,6 +42,53 @@ The repository baseline and MVP product definition are set up, and the web app n
 - TypeScript
 
 This is the simplest maintainable option for a browser-first MVP with no immediate backend requirements.
+
+## Deployment
+
+- GitHub repository: [rattanakchea/kid-app](https://github.com/rattanakchea/kid-app)
+- Vercel project: `kid-games`
+- The local repo is linked to Vercel through `.vercel/project.json`
+- The GitHub repo is connected to the Vercel project for automatic deploys
+- Pushing to the connected branch should trigger a new Vercel deployment
+
+### Deployment Notes
+
+- Vercel is configured with the `Vite` framework preset
+- The Vercel project uses Node `24.x`
+- `.vercel` is ignored in git and should remain local-only metadata
+- The production branch should be confirmed in the Vercel dashboard, typically `main`
+
+### GitHub To Vercel Commands
+
+Use these commands to reproduce the current GitHub-connected Vercel setup:
+
+```bash
+# verify Vercel auth
+npx vercel whoami
+
+# link the local repo to the existing Vercel project
+npx vercel link --project kid-games --yes
+
+# connect the GitHub repo to the linked Vercel project
+npx vercel git connect git@github.com:rattanakchea/kid-app.git
+```
+
+Use this command to trigger a new auto deployment after code changes:
+
+```bash
+git push origin main
+```
+
+### Package Scripts
+
+The project also exposes manual Vercel deploy commands through `package.json`:
+
+```bash
+npm run deploy:preview
+npm run deploy:prod
+```
+
+Use `deploy:preview` for an ad hoc preview deployment. Use `deploy:prod` only when you intentionally want a production deployment outside the normal GitHub push flow.
 
 ## Next Suggested Step
 

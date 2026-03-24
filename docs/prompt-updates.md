@@ -59,3 +59,11 @@ does it auto deploy to vercel when i push code changes to github
 ### Prompt 011
 
 yes
+
+### Prompt 012
+
+add necessary commands to GitHub-to-Vercel connection, in readme.md file
+
+### Prompt 013
+
+add deploymnet script package.json file
