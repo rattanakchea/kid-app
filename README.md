@@ -11,7 +11,7 @@ Production-minded build for a kid-friendly educational web app, developed in sma
 
 ## Current Status
 
-The repository baseline and MVP product definition are set up, and the first web app shell is being scaffolded.
+The repository baseline and MVP product definition are set up, and the web app now includes both flashcards and an initial emoji-to-emoji pair-matching game.
 
 ## Product Direction
 
@@ -45,4 +45,4 @@ This is the simplest maintainable option for a browser-first MVP with no immedia
 
 ## Next Suggested Step
 
-Install dependencies, run the app locally, and implement the core flashcard loop for animals first.
+Add tap-to-hear pronunciation audio and polish feedback for successful matches.

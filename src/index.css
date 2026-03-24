@@ -102,6 +102,31 @@ button {
   margin-top: 18px;
 }
 
+.mode-heading {
+  margin-top: 22px;
+}
+
+.mode-toggle {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.mode-button {
+  padding: 14px 16px;
+  border: 1px solid #d9e4ef;
+  border-radius: 16px;
+  background: #fffaf1;
+  color: #17324d;
+}
+
+.mode-button.active {
+  background: #17324d;
+  color: #fffaf1;
+  border-color: #17324d;
+}
+
 .pack-card {
   display: grid;
   gap: 8px;
@@ -197,6 +222,93 @@ button {
   background: #9aa8b5;
 }
 
+.match-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-top: 18px;
+  color: #50647a;
+  font-size: 0.95rem;
+}
+
+.match-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.match-tile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 110px;
+  padding: 12px;
+  border: 1px solid #f0d7a1;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #fff6e8 0%, #ffe0af 100%);
+  color: #17324d;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 800;
+}
+
+.match-tile:disabled {
+  opacity: 1;
+}
+
+.match-tile-face {
+  transition:
+    transform 140ms ease,
+    opacity 140ms ease;
+}
+
+.match-tile-back {
+  display: none;
+}
+
+.match-tile.flipped {
+  background: linear-gradient(180deg, #ffffff 0%, #fff8ee 100%);
+}
+
+.match-tile.flipped .match-tile-front {
+  display: none;
+}
+
+.match-tile.flipped .match-tile-back {
+  display: inline;
+}
+
+.match-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.match-footer p {
+  margin: 0;
+  color: #50647a;
+}
+
+.match-footer button {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 14px;
+  background: #17324d;
+  color: #fffaf1;
+}
+
+.match-success {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #dff8e8;
+  color: #18543a;
+  font-weight: 700;
+}
+
 .roadmap-list {
   margin: 18px 0 0;
   padding-left: 20px;
@@ -211,5 +323,9 @@ button {
 
   .layout {
     grid-template-columns: 1fr;
+  }
+
+  .match-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

@@ -37,3 +37,17 @@ setup github repo and publish it
 ### Prompt 006
 
 setup github repo and publish it
+
+## 2026-03-24
+
+### Prompt 007
+
+deploy current version to Vercel
+
+### Prompt 008
+
+build the pair-matching game as the next product slice
+
+### Prompt 009
+
+the pair matching game should match emoji to emoji, not with words
