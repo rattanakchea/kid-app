@@ -13,16 +13,14 @@ type MatchTile = {
   solved: boolean;
 };
 
-const sections: { id: GameMode; label: string; subtitle: string }[] = [
+const sections: { id: GameMode; label: string }[] = [
   {
     id: "flashcards",
-    label: "Flashcards",
-    subtitle: "Tap through bright first-word cards"
+    label: "Flashcards"
   },
   {
     id: "match",
-    label: "Pair Games",
-    subtitle: "Find matching emoji pairs"
+    label: "Pair Games"
   }
 ];
 
@@ -195,26 +193,6 @@ export default function App() {
       </header>
 
       <main className="home-layout">
-        <section className="subitem-panel">
-          <div className="section-heading">
-            <h2>{currentSection.label}</h2>
-            <p>{currentSection.subtitle}</p>
-          </div>
-
-          <div className="subitem-row" role="tablist" aria-label="Content packs">
-            {freePacks.map((pack) => (
-              <button
-                key={`${gameMode}-${pack.id}`}
-                className={`subitem-chip${selectedPackId === pack.id ? " active" : ""}`}
-                onClick={() => handleSelectPack(pack.id)}
-                type="button"
-              >
-                {pack.title}
-              </button>
-            ))}
-          </div>
-        </section>
-
         <section className="card-grid-panel">
           <div className="home-card-grid">
             {freePacks.map((pack) => {
@@ -234,6 +212,7 @@ export default function App() {
                     <span className="home-card-share">↗</span>
                   </div>
                   <div className={`home-card-body tint-${pack.id}`}>
+                    <p className="home-card-kicker">{currentSection.label}</p>
                     <h3>{pack.title}</h3>
                     <div className="card-stack" aria-hidden="true">
                       <span className="stack-card stack-left">

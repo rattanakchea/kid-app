@@ -73,3 +73,7 @@ add deploymnet script package.json file
 Update the home page: include sections in menu bar, use the attached photo as reference.
 - Flashcard has sub items: Animals, Fruits
 - Pair games has sub items: Animals, Fruits
+
+### Prompt 015
+
+remove subitem-panel section from the UI completely
