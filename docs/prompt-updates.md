@@ -29,3 +29,11 @@ go ahead
 ### Prompt 004
 
 look good so far. next
+
+### Prompt 005
+
+setup github repo and publish it
+
+### Prompt 006
+
+setup github repo and publish it
