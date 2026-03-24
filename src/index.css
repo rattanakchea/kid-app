@@ -111,13 +111,19 @@ button {
   padding: 24px 20px 0;
 }
 
+.detail-layout {
+  padding: 24px 20px 0;
+}
+
 .card-grid-panel,
+.detail-panel,
 .play-panel {
   border-radius: 28px;
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 18px 44px rgba(32, 74, 101, 0.12);
 }
 
+.detail-panel,
 .play-panel {
   padding: 20px;
 }
@@ -258,6 +264,45 @@ button {
   letter-spacing: 0.02em;
 }
 
+.detail-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.back-button {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 16px;
+  background: #17324d;
+  color: #fffaf1;
+  font-weight: 700;
+}
+
+.detail-pack-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.detail-pack-button {
+  padding: 12px 18px;
+  border: 1px solid #c9d9e5;
+  border-radius: 999px;
+  background: #f8fbff;
+  color: #2c4a62;
+  font-weight: 700;
+}
+
+.detail-pack-button.active {
+  background: #21b7ba;
+  border-color: #21b7ba;
+  color: #ffffff;
+}
+
 .play-panel {
   padding-bottom: 24px;
 }
@@ -390,16 +435,42 @@ button {
     padding-right: 14px;
   }
 
+  .detail-layout {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
   .topbar-actions {
     gap: 12px;
     font-size: 1.5rem;
   }
 
-  .home-card-grid {
-    grid-template-columns: 1fr;
+  .match-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .match-grid {
+  .home-card-body {
+    min-height: 260px;
+    padding: 16px 12px 18px;
+  }
+
+  .home-card-body h3 {
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+  }
+
+  .card-stack {
+    height: 170px;
+    margin-top: 18px;
+  }
+
+  .home-card-footer {
+    padding: 10px 12px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .home-card-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

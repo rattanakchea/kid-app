@@ -77,3 +77,11 @@ Update the home page: include sections in menu bar, use the attached photo as re
 ### Prompt 015
 
 remove subitem-panel section from the UI completely
+
+### Prompt 016
+
+make the flashcard items at least 2 column layout in mobile view
+
+### Prompt 017
+
+add page naivatin view. i.e. User Click on Flashanimal, then user sees a new page view. Currently it is a single page view.
