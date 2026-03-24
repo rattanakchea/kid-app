@@ -93,3 +93,11 @@ add new flashcard section: First words. Baby first common words: such as books, 
 ### Prompt 019
 
 Add a shuffle button in between back and next.
+
+### Prompt 020
+
+add new flashcard section: First words. Baby first common words: such as books, clothes, table, chair. Can we have at least 30 items. Use real images, not emoji this time.
+
+### Prompt 021
+
+The app will be broken, if it depends on the image url from other sources.

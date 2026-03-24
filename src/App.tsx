@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { packs } from "./data/packs";
 
-const freePacks = packs.filter((pack) => !pack.locked);
 const matchTileCount = 4;
 
 type GameMode = "flashcards" | "match";
@@ -33,7 +32,7 @@ function shuffleTiles<T>(items: T[]) {
   return nextItems;
 }
 
-function createMatchTiles(pack: (typeof freePacks)[number]): MatchTile[] {
+function createMatchTiles(pack: (typeof packs)[number]): MatchTile[] {
   return shuffleTiles(
     pack.cards.slice(0, matchTileCount).flatMap((card) => [
       {
@@ -53,7 +52,7 @@ function createMatchTiles(pack: (typeof freePacks)[number]): MatchTile[] {
 }
 
 export default function App() {
-  const [selectedPackId, setSelectedPackId] = useState(freePacks[0]?.id ?? "");
+  const [selectedPackId, setSelectedPackId] = useState("animals");
   const [gameMode, setGameMode] = useState<GameMode>("flashcards");
   const [pageView, setPageView] = useState<PageView>("home");
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -61,8 +60,13 @@ export default function App() {
   const [flippedTileIds, setFlippedTileIds] = useState<string[]>([]);
   const [matchMoves, setMatchMoves] = useState(0);
 
+  const availablePacks = packs.filter(
+    (pack) => !pack.locked && (!pack.modes || pack.modes.includes(gameMode)),
+  );
+
   const selectedPack =
-    packs.find((pack) => pack.id === selectedPackId) ?? freePacks[0];
+    availablePacks.find((pack) => pack.id === selectedPackId) ??
+    availablePacks[0];
 
   const currentSection =
     sections.find((section) => section.id === gameMode) ?? sections[0];
@@ -78,6 +82,10 @@ export default function App() {
   const [isPronouncing, setIsPronouncing] = useState(false);
 
   useEffect(() => {
+    if (!selectedPack) {
+      return;
+    }
+
     setCurrentCardIndex(0);
     setFlippedTileIds([]);
     setMatchMoves(0);
@@ -99,7 +107,11 @@ export default function App() {
 
   const resetGameState = (packId: string) => {
     const nextPack =
-      freePacks.find((pack) => pack.id === packId) ?? freePacks[0];
+      availablePacks.find((pack) => pack.id === packId) ?? availablePacks[0];
+
+    if (!nextPack) {
+      return;
+    }
 
     setSelectedPackId(nextPack.id);
     setCurrentCardIndex(0);
@@ -110,7 +122,6 @@ export default function App() {
 
   const handleSelectMode = (mode: GameMode) => {
     setGameMode(mode);
-    resetGameState(selectedPackId);
     setPageView("home");
   };
 
@@ -123,6 +134,16 @@ export default function App() {
   const handleBackHome = () => {
     setPageView("home");
   };
+
+  useEffect(() => {
+    if (!availablePacks.some((pack) => pack.id === selectedPackId)) {
+      const fallbackPack = availablePacks[0];
+
+      if (fallbackPack) {
+        resetGameState(fallbackPack.id);
+      }
+    }
+  }, [availablePacks, selectedPackId]);
 
   const handlePrevious = () => {
     if (canGoBack) {
@@ -246,9 +267,17 @@ export default function App() {
       {gameMode === "flashcards" ? (
         <>
           <article className="flashcard">
-            <div className="flashcard-emoji" aria-hidden="true">
-              {currentCard.emoji}
-            </div>
+            {currentCard.imageUrl ? (
+              <img
+                className="flashcard-image"
+                src={currentCard.imageUrl}
+                alt={currentCard.name}
+              />
+            ) : (
+              <div className="flashcard-emoji" aria-hidden="true">
+                {currentCard.emoji}
+              </div>
+            )}
             <div className="flashcard-word">{currentCard.name}</div>
             <div className="flashcard-progress">
               Card {currentCardIndex + 1} of {selectedPack.cards.length}
@@ -375,7 +404,7 @@ export default function App() {
         <main className="home-layout">
           <section className="card-grid-panel">
             <div className="home-card-grid">
-              {freePacks.map((pack) => {
+              {availablePacks.map((pack) => {
                 const footerLabel =
                   gameMode === "flashcards" ? "FLASH CARDS" : "PAIR GAMES";
 
@@ -394,17 +423,30 @@ export default function App() {
                       <p className="home-card-kicker">{currentSection.label}</p>
                       <h3>{pack.title}</h3>
                       <div className="card-stack" aria-hidden="true">
-                        <span className="stack-card stack-left">
-                          {pack.cards[0]?.emoji}
-                        </span>
-                        <span className="stack-card stack-center">
-                          {gameMode === "flashcards"
-                            ? (pack.cards[1]?.emoji ?? pack.cards[0]?.emoji)
-                            : (pack.cards[2]?.emoji ?? pack.cards[0]?.emoji)}
-                        </span>
-                        <span className="stack-card stack-right">
-                          {pack.cards[3]?.emoji ?? pack.cards[0]?.emoji}
-                        </span>
+                        {[pack.cards[0], pack.cards[1] ?? pack.cards[0], pack.cards[2] ?? pack.cards[0]].map(
+                          (card, index) => (
+                            <span
+                              key={`${pack.id}-${card.id}-${index}`}
+                              className={`stack-card ${
+                                index === 0
+                                  ? "stack-left"
+                                  : index === 1
+                                    ? "stack-center"
+                                    : "stack-right"
+                              }`}
+                            >
+                              {card.imageUrl ? (
+                                <img
+                                  className="stack-card-image"
+                                  src={card.imageUrl}
+                                  alt={card.name}
+                                />
+                              ) : (
+                                card.emoji
+                              )}
+                            </span>
+                          ),
+                        )}
                       </div>
                     </div>
                     <div className="home-card-footer">{footerLabel}</div>
@@ -426,7 +468,7 @@ export default function App() {
                 ← Back
               </button>
               <div className="detail-pack-switcher">
-                {freePacks.map((pack) => (
+                {availablePacks.map((pack) => (
                   <button
                     key={`detail-${pack.id}`}
                     className={`detail-pack-button${selectedPackId === pack.id ? " active" : ""}`}

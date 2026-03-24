@@ -18,6 +18,7 @@ The repository baseline and MVP product definition are set up, the web app inclu
 - The first product is a browser-first educational app for young kids.
 - The initial learning modes are flashcards and pair matching.
 - The first content packs are first words, animals, and fruits.
+- `First Words` is flashcards-only for now and uses bundled in-app image cards instead of external URLs.
 - The monetization path is free starter content plus premium content unlocks.
 
 ## Working Approach

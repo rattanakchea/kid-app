@@ -185,6 +185,10 @@ button {
   background: linear-gradient(90deg, #dfd096 0%, #d6f1ae 100%);
 }
 
+.band-first-words {
+  background: linear-gradient(90deg, #f1d8ab 0%, #f0edb3 100%);
+}
+
 .band-fruits {
   background: linear-gradient(90deg, #b0d86b 0%, #d2ea7f 100%);
 }
@@ -196,6 +200,10 @@ button {
 
 .tint-animals {
   background: linear-gradient(180deg, #dff0b4 0%, #f9d7ae 100%);
+}
+
+.tint-first-words {
+  background: linear-gradient(180deg, #f9f0c8 0%, #ffe0bb 100%);
 }
 
 .tint-fruits {
@@ -229,6 +237,7 @@ button {
   bottom: 0;
   display: grid;
   place-items: center;
+  overflow: hidden;
   width: 38%;
   aspect-ratio: 0.72;
   border-radius: 22px;
@@ -236,6 +245,12 @@ button {
   border: 3px solid rgba(255, 255, 255, 0.8);
   box-shadow: 0 16px 28px rgba(64, 87, 107, 0.16);
   font-size: clamp(3rem, 8vw, 5rem);
+}
+
+.stack-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .stack-left {
@@ -318,6 +333,14 @@ button {
 
 .flashcard-emoji {
   font-size: clamp(4rem, 12vw, 7rem);
+}
+
+.flashcard-image {
+  width: min(100%, 320px);
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 24px;
+  box-shadow: 0 14px 28px rgba(53, 71, 88, 0.18);
 }
 
 .flashcard-word {
