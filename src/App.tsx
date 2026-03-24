@@ -16,7 +16,7 @@ type MatchTile = {
 
 const sections: { id: GameMode; label: string }[] = [
   { id: "flashcards", label: "Flashcards" },
-  { id: "match", label: "Pair Games" }
+  { id: "match", label: "Pair Games" },
 ];
 
 function shuffleTiles<T>(items: T[]) {
@@ -40,14 +40,14 @@ function createMatchTiles(pack: (typeof freePacks)[number]): MatchTile[] {
         id: `${card.id}-a`,
         pairId: card.id,
         label: card.emoji,
-        solved: false
+        solved: false,
       },
       {
         id: `${card.id}-b`,
         pairId: card.id,
         label: card.emoji,
-        solved: false
-      }
+        solved: false,
+      },
     ]),
   );
 }
@@ -71,7 +71,11 @@ export default function App() {
   const canGoBack = currentCardIndex > 0;
   const canGoForward = currentCardIndex < selectedPack.cards.length - 1;
   const solvedCount = matchTiles.filter((tile) => tile.solved).length;
-  const matchComplete = solvedCount === matchTiles.length && matchTiles.length > 0;
+  const matchComplete =
+    solvedCount === matchTiles.length && matchTiles.length > 0;
+  const speechSynthesisSupported =
+    typeof window !== "undefined" && "speechSynthesis" in window;
+  const [isPronouncing, setIsPronouncing] = useState(false);
 
   useEffect(() => {
     setCurrentCardIndex(0);
@@ -80,8 +84,22 @@ export default function App() {
     setMatchTiles(createMatchTiles(selectedPack));
   }, [selectedPack]);
 
+  useEffect(() => {
+    if (!speechSynthesisSupported) {
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    setIsPronouncing(false);
+
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, [currentCard, gameMode, pageView, speechSynthesisSupported]);
+
   const resetGameState = (packId: string) => {
-    const nextPack = freePacks.find((pack) => pack.id === packId) ?? freePacks[0];
+    const nextPack =
+      freePacks.find((pack) => pack.id === packId) ?? freePacks[0];
 
     setSelectedPackId(nextPack.id);
     setCurrentCardIndex(0);
@@ -132,6 +150,30 @@ export default function App() {
     setCurrentCardIndex(nextIndex);
   };
 
+  const handlePronounceCard = () => {
+    if (!speechSynthesisSupported) {
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(currentCard.name);
+    utterance.lang = "en-US";
+    utterance.rate = 0.85;
+    utterance.pitch = 1.05;
+    utterance.onstart = () => {
+      setIsPronouncing(true);
+    };
+    utterance.onend = () => {
+      setIsPronouncing(false);
+    };
+    utterance.onerror = () => {
+      setIsPronouncing(false);
+    };
+
+    window.speechSynthesis.speak(utterance);
+  };
+
   const handleResetMatchGame = () => {
     setFlippedTileIds([]);
     setMatchMoves(0);
@@ -167,10 +209,15 @@ export default function App() {
       return;
     }
 
-    if (firstTile.pairId === secondTile.pairId && firstTile.id !== secondTile.id) {
+    if (
+      firstTile.pairId === secondTile.pairId &&
+      firstTile.id !== secondTile.id
+    ) {
       setMatchTiles((currentTiles) =>
         currentTiles.map((entry) =>
-          entry.pairId === firstTile.pairId ? { ...entry, solved: true } : entry,
+          entry.pairId === firstTile.pairId
+            ? { ...entry, solved: true }
+            : entry,
         ),
       );
       setFlippedTileIds([]);
@@ -186,7 +233,8 @@ export default function App() {
     <>
       <div className="section-heading">
         <h2>
-          {selectedPack.title} {gameMode === "flashcards" ? "flashcards" : "pair game"}
+          {selectedPack.title}{" "}
+          {gameMode === "flashcards" ? "flashcards" : "pair game"}
         </h2>
         <p>
           {gameMode === "flashcards"
@@ -205,10 +253,28 @@ export default function App() {
             <div className="flashcard-progress">
               Card {currentCardIndex + 1} of {selectedPack.cards.length}
             </div>
+            <button
+              className="flashcard-audio-button"
+              onClick={handlePronounceCard}
+              type="button"
+              disabled={!speechSynthesisSupported}
+              aria-label={`Hear ${currentCard.name}`}
+            >
+              <span aria-hidden="true">👂</span>
+              <span>{isPronouncing ? "Speaking..." : "Hear"}</span>
+            </button>
+            <div className="flashcard-audio-note">
+              {speechSynthesisSupported ||
+                "Audio is not available in this browser."}
+            </div>
           </article>
 
           <div className="flashcard-actions">
-            <button onClick={handlePrevious} type="button" disabled={!canGoBack}>
+            <button
+              onClick={handlePrevious}
+              type="button"
+              disabled={!canGoBack}
+            >
               Back
             </button>
             <button onClick={handleShuffleFlashcard} type="button">
@@ -253,7 +319,10 @@ export default function App() {
           </div>
 
           <div className="match-footer">
-            <p>Find the two matching emoji tiles. The board resets when you change packs.</p>
+            <p>
+              Find the two matching emoji tiles. The board resets when you
+              change packs.
+            </p>
             <button onClick={handleResetMatchGame} type="button">
               Shuffle again
             </button>
@@ -275,7 +344,11 @@ export default function App() {
         <div className="topbar-row">
           <div className="topbar-title-group">
             <p className="topbar-eyebrow">Little learners</p>
-            <h1>{pageView === "home" ? currentSection.label : `${selectedPack.title} ${currentSection.label}`}</h1>
+            <h1>
+              {pageView === "home"
+                ? currentSection.label
+                : `${selectedPack.title} ${currentSection.label}`}
+            </h1>
           </div>
           <div className="topbar-actions" aria-hidden="true">
             <span>⌕</span>
@@ -326,8 +399,8 @@ export default function App() {
                         </span>
                         <span className="stack-card stack-center">
                           {gameMode === "flashcards"
-                            ? pack.cards[1]?.emoji ?? pack.cards[0]?.emoji
-                            : pack.cards[2]?.emoji ?? pack.cards[0]?.emoji}
+                            ? (pack.cards[1]?.emoji ?? pack.cards[0]?.emoji)
+                            : (pack.cards[2]?.emoji ?? pack.cards[0]?.emoji)}
                         </span>
                         <span className="stack-card stack-right">
                           {pack.cards[3]?.emoji ?? pack.cards[0]?.emoji}
@@ -345,7 +418,11 @@ export default function App() {
         <main className="detail-layout">
           <section className="detail-panel">
             <div className="detail-topbar">
-              <button className="back-button" onClick={handleBackHome} type="button">
+              <button
+                className="back-button"
+                onClick={handleBackHome}
+                type="button"
+              >
                 ← Back
               </button>
               <div className="detail-pack-switcher">
