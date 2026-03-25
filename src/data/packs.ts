@@ -3,6 +3,10 @@ export type Card = {
   name: string;
   emoji: string;
   imageUrl?: string;
+  swatch?: {
+    fill: string;
+    stroke?: string;
+  };
 };
 
 export type Pack = {
@@ -18,7 +22,8 @@ export const packs: Pack[] = [
   {
     id: "first-words",
     title: "First Words",
-    description: "Baby-friendly everyday words like books, clothes, and furniture.",
+    description:
+      "Baby-friendly everyday words like books, clothes, and furniture.",
     cards: [
       { id: "book", name: "Book", emoji: "📚" },
       { id: "shirt", name: "Shirt", emoji: "👕" },
@@ -49,8 +54,8 @@ export const packs: Pack[] = [
       { id: "toothbrush", name: "Toothbrush", emoji: "🪥" },
       { id: "tree", name: "Tree", emoji: "🌳" },
       { id: "sun", name: "Sun", emoji: "☀️" },
-      { id: "moon", name: "Moon", emoji: "🌙" }
-    ]
+      { id: "moon", name: "Moon", emoji: "🌙" },
+    ],
   },
   {
     id: "animals",
@@ -91,8 +96,8 @@ export const packs: Pack[] = [
       { id: "parrot", name: "Parrot", emoji: "🦜" },
       { id: "owl", name: "Owl", emoji: "🦉" },
       { id: "duck", name: "Duck", emoji: "🦆" },
-      { id: "chicken", name: "Chicken", emoji: "🐔" }
-    ]
+      { id: "chicken", name: "Chicken", emoji: "🐔" },
+    ],
   },
   {
     id: "fruits",
@@ -133,14 +138,46 @@ export const packs: Pack[] = [
       { id: "nectarine", name: "Nectarine", emoji: "🧡" },
       { id: "cranberry", name: "Cranberry", emoji: "🟥" },
       { id: "lime", name: "Lime", emoji: "🟢" },
-      { id: "date", name: "Date", emoji: "🟤" }
-    ]
+      { id: "date", name: "Date", emoji: "🟤" },
+    ],
   },
   {
     id: "colors",
     title: "Colors",
-    description: "Premium pack",
-    locked: true,
-    cards: []
-  }
+    description:
+      "Learn common color names with bold swatches and simple repetition.",
+    cards: [
+      { id: "red", name: "Red", emoji: "🔴", swatch: { fill: "#ef4444" } },
+      { id: "blue", name: "Blue", emoji: "🔵", swatch: { fill: "#3b82f6" } },
+      {
+        id: "yellow",
+        name: "Yellow",
+        emoji: "🟡",
+        swatch: { fill: "#facc15" },
+      },
+      { id: "green", name: "Green", emoji: "🟢", swatch: { fill: "#22c55e" } },
+      {
+        id: "orange",
+        name: "Orange",
+        emoji: "🟠",
+        swatch: { fill: "#f97316" },
+      },
+      {
+        id: "purple",
+        name: "Purple",
+        emoji: "🟣",
+        swatch: { fill: "#a855f7" },
+      },
+      { id: "pink", name: "Pink", emoji: "🩷", swatch: { fill: "#f472b6" } },
+      { id: "brown", name: "Brown", emoji: "🟤", swatch: { fill: "#92400e" } },
+      { id: "black", name: "Black", emoji: "⚫", swatch: { fill: "#111827" } },
+      {
+        id: "white",
+        name: "White",
+        emoji: "⚪",
+        swatch: { fill: "#ffffff", stroke: "#cbd5e1" },
+      },
+      { id: "gray", name: "Gray", emoji: "⚪", swatch: { fill: "#9ca3af" } },
+    ],
+  },
 ];

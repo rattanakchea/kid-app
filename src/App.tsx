@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { packs } from "./data/packs";
+import { packs, type Card } from "./data/packs";
 
 const matchTileCount = 6;
 
@@ -9,7 +9,7 @@ type PageView = "home" | "detail";
 type MatchTile = {
   id: string;
   pairId: string;
-  label: string;
+  card: Card;
   solved: boolean;
 };
 
@@ -38,16 +38,66 @@ function createMatchTiles(pack: (typeof packs)[number]): MatchTile[] {
       {
         id: `${card.id}-a`,
         pairId: card.id,
-        label: card.emoji,
+        card,
         solved: false,
       },
       {
         id: `${card.id}-b`,
         pairId: card.id,
-        label: card.emoji,
+        card,
         solved: false,
       },
     ]),
+  );
+}
+
+function CardVisual({
+  card,
+  className = "",
+  decorative = false,
+}: {
+  card: Card;
+  className?: string;
+  decorative?: boolean;
+}) {
+  if (card.swatch) {
+    return (
+      <svg
+        className={`card-swatch ${className}`.trim()}
+        viewBox="0 0 100 100"
+        role={decorative ? undefined : "img"}
+        aria-hidden={decorative ? "true" : undefined}
+        aria-label={decorative ? undefined : `${card.name} color`}
+      >
+        <rect
+          x="10"
+          y="10"
+          width="80"
+          height="80"
+          rx="22"
+          fill={card.swatch.fill}
+          stroke={card.swatch.stroke ?? "transparent"}
+          strokeWidth="6"
+        />
+      </svg>
+    );
+  }
+
+  if (card.imageUrl) {
+    return (
+      <img
+        className={className}
+        src={card.imageUrl}
+        alt={decorative ? "" : card.name}
+        aria-hidden={decorative ? "true" : undefined}
+      />
+    );
+  }
+
+  return (
+    <div className={className} aria-hidden="true">
+      {card.emoji}
+    </div>
   );
 }
 
@@ -270,7 +320,7 @@ export default function App() {
         <p>
           {gameMode === "flashcards"
             ? ""
-            : "Flip tiles and match the same emoji pair."}
+            : "Flip tiles and match the same color or picture pair."}
         </p>
       </div>
 
@@ -284,17 +334,16 @@ export default function App() {
           >
             <div className="flashcard-inner">
               <div className="flashcard-face flashcard-front">
-                {currentCard.imageUrl ? (
-                  <img
-                    className="flashcard-image"
-                    src={currentCard.imageUrl}
-                    alt={currentCard.name}
-                  />
-                ) : (
-                  <div className="flashcard-emoji" aria-hidden="true">
-                    {currentCard.emoji}
-                  </div>
-                )}
+                <CardVisual
+                  card={currentCard}
+                  className={
+                    currentCard.swatch
+                      ? "flashcard-swatch"
+                      : currentCard.imageUrl
+                        ? "flashcard-image"
+                        : "flashcard-emoji"
+                  }
+                />
                 <div className="flashcard-face-note">Tap card to flip</div>
               </div>
 
@@ -376,7 +425,17 @@ export default function App() {
                 >
                   <span className="match-tile-face match-tile-front">?</span>
                   <span className="match-tile-face match-tile-back">
-                    {tile.label}
+                    <CardVisual
+                      card={tile.card}
+                      className={
+                        tile.card.swatch
+                          ? "match-tile-swatch"
+                          : tile.card.imageUrl
+                            ? "match-tile-image"
+                            : "match-tile-emoji"
+                      }
+                      decorative
+                    />
                   </span>
                 </button>
               );
@@ -385,7 +444,7 @@ export default function App() {
 
           <div className="match-footer">
             <p>
-              Find the two matching emoji tiles. The board resets when you
+              Find the two matching pairs. The board resets when you
               change packs.
             </p>
             <button onClick={handleResetMatchGame} type="button">
@@ -466,15 +525,17 @@ export default function App() {
                                   : "stack-right"
                             }`}
                           >
-                            {card.imageUrl ? (
-                              <img
-                                className="stack-card-image"
-                                src={card.imageUrl}
-                                alt={card.name}
-                              />
-                            ) : (
-                              card.emoji
-                            )}
+                            <CardVisual
+                              card={card}
+                              className={
+                                card.swatch
+                                  ? "stack-card-swatch"
+                                  : card.imageUrl
+                                    ? "stack-card-image"
+                                    : "stack-card-emoji"
+                              }
+                              decorative
+                            />
                           </span>
                         ))}
                       </div>

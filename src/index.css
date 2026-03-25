@@ -193,6 +193,16 @@ button {
   background: linear-gradient(90deg, #b0d86b 0%, #d2ea7f 100%);
 }
 
+.band-colors {
+  background: linear-gradient(
+    90deg,
+    #fdba74 0%,
+    #f472b6 34%,
+    #60a5fa 68%,
+    #34d399 100%
+  );
+}
+
 .home-card-body {
   min-height: 320px;
   padding: 22px 18px 24px;
@@ -208,6 +218,10 @@ button {
 
 .tint-fruits {
   background: linear-gradient(180deg, #d7f2de 0%, #ffe2b6 100%);
+}
+
+.tint-colors {
+  background: linear-gradient(180deg, #fff0df 0%, #f4ebff 45%, #dff6ff 100%);
 }
 
 .home-card-body h3 {
@@ -251,6 +265,22 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.stack-card-emoji {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.card-swatch {
+  display: block;
+}
+
+.stack-card-swatch {
+  width: 92%;
+  height: 92%;
 }
 
 .stack-left {
@@ -391,6 +421,12 @@ button {
   box-shadow: 0 18px 36px rgba(53, 71, 88, 0.2);
 }
 
+.flashcard-swatch {
+  width: min(100%, 380px);
+  aspect-ratio: 1;
+  filter: drop-shadow(0 18px 36px rgba(53, 71, 88, 0.18));
+}
+
 .flashcard-word {
   font-size: clamp(2.4rem, 5vw, 3.6rem);
   font-weight: 800;
@@ -504,6 +540,27 @@ button {
   font-size: clamp(2.8rem, 8vw, 4.8rem);
   line-height: 1;
   text-align: center;
+}
+
+.match-tile-emoji {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: clamp(2.8rem, 8vw, 4.8rem);
+  line-height: 1;
+}
+
+.match-tile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.match-tile-swatch {
+  width: 100%;
+  height: 100%;
 }
 
 .match-tile.flipped {
