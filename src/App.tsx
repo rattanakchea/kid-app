@@ -56,6 +56,7 @@ export default function App() {
   const [gameMode, setGameMode] = useState<GameMode>("flashcards");
   const [pageView, setPageView] = useState<PageView>("home");
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [isFlashcardFlipped, setIsFlashcardFlipped] = useState(false);
   const [matchTiles, setMatchTiles] = useState<MatchTile[]>([]);
   const [flippedTileIds, setFlippedTileIds] = useState<string[]>([]);
   const [matchMoves, setMatchMoves] = useState(0);
@@ -87,6 +88,7 @@ export default function App() {
     }
 
     setCurrentCardIndex(0);
+    setIsFlashcardFlipped(false);
     setFlippedTileIds([]);
     setMatchMoves(0);
     setMatchTiles(createMatchTiles(selectedPack));
@@ -115,6 +117,7 @@ export default function App() {
 
     setSelectedPackId(nextPack.id);
     setCurrentCardIndex(0);
+    setIsFlashcardFlipped(false);
     setFlippedTileIds([]);
     setMatchMoves(0);
     setMatchTiles(createMatchTiles(nextPack));
@@ -147,12 +150,14 @@ export default function App() {
 
   const handlePrevious = () => {
     if (canGoBack) {
+      setIsFlashcardFlipped(false);
       setCurrentCardIndex((index) => index - 1);
     }
   };
 
   const handleNext = () => {
     if (canGoForward) {
+      setIsFlashcardFlipped(false);
       setCurrentCardIndex((index) => index + 1);
     }
   };
@@ -168,6 +173,7 @@ export default function App() {
       nextIndex = Math.floor(Math.random() * selectedPack.cards.length);
     }
 
+    setIsFlashcardFlipped(false);
     setCurrentCardIndex(nextIndex);
   };
 
@@ -199,6 +205,10 @@ export default function App() {
     setFlippedTileIds([]);
     setMatchMoves(0);
     setMatchTiles(createMatchTiles(selectedPack));
+  };
+
+  const handleFlipFlashcard = () => {
+    setIsFlashcardFlipped((flipped) => !flipped);
   };
 
   const handleTileClick = (tileId: string) => {
@@ -266,37 +276,57 @@ export default function App() {
 
       {gameMode === "flashcards" ? (
         <>
-          <article className="flashcard">
-            {currentCard.imageUrl ? (
-              <img
-                className="flashcard-image"
-                src={currentCard.imageUrl}
-                alt={currentCard.name}
-              />
-            ) : (
-              <div className="flashcard-emoji" aria-hidden="true">
-                {currentCard.emoji}
+          <button
+            className={`flashcard${isFlashcardFlipped ? " flipped" : ""}`}
+            onClick={handleFlipFlashcard}
+            type="button"
+            aria-label={`Flip flashcard for ${currentCard.name}`}
+          >
+            <div className="flashcard-inner">
+              <div className="flashcard-face flashcard-front">
+                {currentCard.imageUrl ? (
+                  <img
+                    className="flashcard-image"
+                    src={currentCard.imageUrl}
+                    alt={currentCard.name}
+                  />
+                ) : (
+                  <div className="flashcard-emoji" aria-hidden="true">
+                    {currentCard.emoji}
+                  </div>
+                )}
+                <div className="flashcard-face-note">Tap card to flip</div>
               </div>
-            )}
-            <div className="flashcard-word">{currentCard.name}</div>
+
+              <div className="flashcard-face flashcard-back">
+                <div className="flashcard-word">{currentCard.name}</div>
+                <button
+                  className="flashcard-audio-button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    handlePronounceCard();
+                  }}
+                  type="button"
+                  disabled={!speechSynthesisSupported || isPronouncing}
+                  aria-label={`Hear ${currentCard.name}`}
+                >
+                  <span aria-hidden="true">👂</span>
+                  <span>Hear</span>
+                </button>
+                <div className="flashcard-audio-note">
+                  {speechSynthesisSupported
+                    ? "Tap Hear to play the word aloud."
+                    : "Audio is not available in this browser."}
+                </div>
+              </div>
+            </div>
+          </button>
+
+          <div className="flashcard-meta">
             <div className="flashcard-progress">
               Card {currentCardIndex + 1} of {selectedPack.cards.length}
             </div>
-            <button
-              className="flashcard-audio-button"
-              onClick={handlePronounceCard}
-              type="button"
-              disabled={!speechSynthesisSupported}
-              aria-label={`Hear ${currentCard.name}`}
-            >
-              <span aria-hidden="true">👂</span>
-              <span>{isPronouncing ? "Speaking..." : "Hear"}</span>
-            </button>
-            <div className="flashcard-audio-note">
-              {speechSynthesisSupported ||
-                "Audio is not available in this browser."}
-            </div>
-          </article>
+          </div>
 
           <div className="flashcard-actions">
             <button
