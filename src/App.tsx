@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { packs } from "./data/packs";
 
-const matchTileCount = 4;
+const matchTileCount = 6;
 
 type GameMode = "flashcards" | "match";
 type PageView = "home" | "detail";
@@ -269,7 +269,7 @@ export default function App() {
         </h2>
         <p>
           {gameMode === "flashcards"
-            ? "Browse the selected set one card at a time."
+            ? ""
             : "Flip tiles and match the same emoji pair."}
         </p>
       </div>
@@ -333,14 +333,20 @@ export default function App() {
               onClick={handlePrevious}
               type="button"
               disabled={!canGoBack}
+              aria-label="Previous card"
             >
-              Back
+              ←
             </button>
             <button onClick={handleShuffleFlashcard} type="button">
               Shuffle
             </button>
-            <button onClick={handleNext} type="button" disabled={!canGoForward}>
-              Next
+            <button
+              onClick={handleNext}
+              type="button"
+              disabled={!canGoForward}
+              aria-label="Next card"
+            >
+              →
             </button>
           </div>
         </>
