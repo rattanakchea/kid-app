@@ -444,8 +444,8 @@ export default function App() {
 
           <div className="match-footer">
             <p>
-              Find the two matching pairs. The board resets when you
-              change packs.
+              Find the two matching pairs. The board resets when you change
+              packs.
             </p>
             <button onClick={handleResetMatchGame} type="button">
               Shuffle again
@@ -468,11 +468,7 @@ export default function App() {
         <div className="topbar-row">
           <div className="topbar-title-group">
             <p className="topbar-eyebrow">Little learners</p>
-            <h1>
-              {pageView === "home"
-                ? currentSection.label
-                : `${selectedPack.title} ${currentSection.label}`}
-            </h1>
+            <h1>Emoji Flashcards and Games</h1>
           </div>
           <div className="topbar-actions" aria-hidden="true"></div>
         </div>
