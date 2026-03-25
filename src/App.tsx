@@ -379,11 +379,7 @@ export default function App() {
                 : `${selectedPack.title} ${currentSection.label}`}
             </h1>
           </div>
-          <div className="topbar-actions" aria-hidden="true">
-            <span>⌕</span>
-            <span>♡</span>
-            <span>☰</span>
-          </div>
+          <div className="topbar-actions" aria-hidden="true"></div>
         </div>
 
         <nav className="section-menu" aria-label="Game sections">
@@ -415,38 +411,36 @@ export default function App() {
                     onClick={() => handleOpenDetailPage(gameMode, pack.id)}
                     type="button"
                   >
-                    <div className={`home-card-top band-${pack.id}`}>
-                      <span className="home-card-heart">♡</span>
-                      <span className="home-card-share">↗</span>
-                    </div>
                     <div className={`home-card-body tint-${pack.id}`}>
                       <p className="home-card-kicker">{currentSection.label}</p>
                       <h3>{pack.title}</h3>
                       <div className="card-stack" aria-hidden="true">
-                        {[pack.cards[0], pack.cards[1] ?? pack.cards[0], pack.cards[2] ?? pack.cards[0]].map(
-                          (card, index) => (
-                            <span
-                              key={`${pack.id}-${card.id}-${index}`}
-                              className={`stack-card ${
-                                index === 0
-                                  ? "stack-left"
-                                  : index === 1
-                                    ? "stack-center"
-                                    : "stack-right"
-                              }`}
-                            >
-                              {card.imageUrl ? (
-                                <img
-                                  className="stack-card-image"
-                                  src={card.imageUrl}
-                                  alt={card.name}
-                                />
-                              ) : (
-                                card.emoji
-                              )}
-                            </span>
-                          ),
-                        )}
+                        {[
+                          pack.cards[0],
+                          pack.cards[1] ?? pack.cards[0],
+                          pack.cards[2] ?? pack.cards[0],
+                        ].map((card, index) => (
+                          <span
+                            key={`${pack.id}-${card.id}-${index}`}
+                            className={`stack-card ${
+                              index === 0
+                                ? "stack-left"
+                                : index === 1
+                                  ? "stack-center"
+                                  : "stack-right"
+                            }`}
+                          >
+                            {card.imageUrl ? (
+                              <img
+                                className="stack-card-image"
+                                src={card.imageUrl}
+                                alt={card.name}
+                              />
+                            ) : (
+                              card.emoji
+                            )}
+                          </span>
+                        ))}
                       </div>
                     </div>
                     <div className="home-card-footer">{footerLabel}</div>
