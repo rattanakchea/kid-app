@@ -101,3 +101,7 @@ add new flashcard section: First words. Baby first common words: such as books, 
 ### Prompt 021
 
 The app will be broken, if it depends on the image url from other sources.
+
+### Prompt 022
+
+add more data pack 25 more into fruits category, 25 more into animals
