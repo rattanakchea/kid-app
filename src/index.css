@@ -802,8 +802,9 @@ button {
   }
 
   .card-stack {
-    height: 170px;
+    height: 150px;
     margin-top: 18px;
+    opacity: 0.75;
   }
 
   .home-card-footer {

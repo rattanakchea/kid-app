@@ -163,7 +163,8 @@ export default function App() {
   );
 
   const selectedPack =
-    playablePacks.find((pack) => pack.id === selectedPackId) ?? playablePacks[0];
+    playablePacks.find((pack) => pack.id === selectedPackId) ??
+    playablePacks[0];
 
   const currentSection =
     sections.find((section) => section.id === gameMode) ?? sections[0];
@@ -229,7 +230,8 @@ export default function App() {
   }, [currentCard, gameMode, pageView, speechSynthesisSupported]);
 
   const resetGameState = (packId: string) => {
-    const nextPack = playablePacks.find((pack) => pack.id === packId) ?? playablePacks[0];
+    const nextPack =
+      playablePacks.find((pack) => pack.id === packId) ?? playablePacks[0];
 
     if (!nextPack) {
       return;
@@ -243,7 +245,10 @@ export default function App() {
     setMatchTiles(createMatchTiles(nextPack));
   };
 
-  const requestParentGate = (title: string, action: () => Promise<void> | void) => {
+  const requestParentGate = (
+    title: string,
+    action: () => Promise<void> | void,
+  ) => {
     setGateChallenge({
       left: 11 + Math.floor(Math.random() * 8),
       right: 7 + Math.floor(Math.random() * 6),
@@ -438,7 +443,9 @@ export default function App() {
         setStoreMessage(result.message ?? "Premium unlocked.");
 
         if (result.premiumUnlocked && pendingPremiumPackId) {
-          const targetPack = packs.find((pack) => pack.id === pendingPremiumPackId);
+          const targetPack = packs.find(
+            (pack) => pack.id === pendingPremiumPackId,
+          );
 
           if (targetPack && targetPack.cards.length > 0) {
             resetGameState(targetPack.id);
@@ -473,14 +480,18 @@ export default function App() {
 
   const premiumPacks = visiblePacks.filter((pack) => pack.requiresPremium);
   const premiumTargetPack =
-    visiblePacks.find((pack) => pack.id === pendingPremiumPackId) ?? premiumPacks[0];
+    visiblePacks.find((pack) => pack.id === pendingPremiumPackId) ??
+    premiumPacks[0];
 
   const renderGameContent = () => {
     if (!selectedPack || !currentCard) {
       return (
         <div className="empty-state">
           <h2>More packs are coming soon</h2>
-          <p>Free packs are ready now. Premium packs will appear here as they launch.</p>
+          <p>
+            Free packs are ready now. Premium packs will appear here as they
+            launch.
+          </p>
         </div>
       );
     }
@@ -489,7 +500,8 @@ export default function App() {
       <>
         <div className="section-heading">
           <h2>
-            {selectedPack.title} {gameMode === "flashcards" ? "flashcards" : "pair game"}
+            {selectedPack.title}{" "}
+            {gameMode === "flashcards" ? "flashcards" : "pair game"}
           </h2>
           <p>
             {gameMode === "flashcards"
@@ -587,7 +599,8 @@ export default function App() {
 
             <div className="match-grid">
               {matchTiles.map((tile) => {
-                const isFlipped = tile.solved || flippedTileIds.includes(tile.id);
+                const isFlipped =
+                  tile.solved || flippedTileIds.includes(tile.id);
 
                 return (
                   <button
@@ -596,7 +609,9 @@ export default function App() {
                     onClick={() => handleTileClick(tile.id)}
                     type="button"
                     disabled={tile.solved}
-                    aria-label={tile.solved ? `${tile.card.name} matched` : "Hidden tile"}
+                    aria-label={
+                      tile.solved ? `${tile.card.name} matched` : "Hidden tile"
+                    }
                   >
                     <span className="match-tile-face match-tile-front">?</span>
                     <span className="match-tile-face match-tile-back">
@@ -618,7 +633,10 @@ export default function App() {
             </div>
 
             <div className="match-footer">
-              <p>Find the two matching pairs. The board resets when you change packs.</p>
+              <p>
+                Find the two matching pairs. The board resets when you change
+                packs.
+              </p>
               <button onClick={handleResetMatchGame} type="button">
                 Shuffle again
               </button>
@@ -651,7 +669,11 @@ export default function App() {
                   : "PAIR GAMES";
             const previewCards =
               pack.cards.length > 0
-                ? [pack.cards[0], pack.cards[1] ?? pack.cards[0], pack.cards[2] ?? pack.cards[0]]
+                ? [
+                    pack.cards[0],
+                    pack.cards[1] ?? pack.cards[0],
+                    pack.cards[2] ?? pack.cards[0],
+                  ]
                 : [];
 
             return (
@@ -664,9 +686,12 @@ export default function App() {
               >
                 <div className={`home-card-body tint-${pack.id}`}>
                   <div className="home-card-header">
-                    <p className="home-card-kicker">{currentSection.label}</p>
+                    {/* <p className="home-card-kicker">{currentSection.label}</p> */}
                     {packState.locked ? (
-                      <span className="home-card-badge" aria-label="Premium pack">
+                      <span
+                        className="home-card-badge"
+                        aria-label="Premium pack"
+                      >
                         Premium
                       </span>
                     ) : null}
@@ -723,8 +748,8 @@ export default function App() {
           <p className="premium-kicker">Parent area</p>
           <h2>{premiumTargetPack?.title ?? "Premium packs"}</h2>
           <p>
-            Unlock premium themed packs for more flashcards and pair games. Purchases
-            and restore actions are protected by a parental gate.
+            Unlock premium themed packs for more flashcards and pair games.
+            Purchases and restore actions are protected by a parental gate.
           </p>
           <ul className="premium-list">
             {premiumPacks.map((pack) => (
@@ -732,18 +757,28 @@ export default function App() {
             ))}
           </ul>
           <div className="premium-actions">
-            <button onClick={handlePurchasePremium} type="button" disabled={isStoreBusy}>
+            <button
+              onClick={handlePurchasePremium}
+              type="button"
+              disabled={isStoreBusy}
+            >
               {isStoreBusy
                 ? "Working..."
                 : premiumProduct
                   ? `Unlock for ${premiumProduct.displayPrice}`
                   : "Unlock premium"}
             </button>
-            <button onClick={handleRestorePremium} type="button" disabled={isStoreBusy}>
+            <button
+              onClick={handleRestorePremium}
+              type="button"
+              disabled={isStoreBusy}
+            >
               Restore purchases
             </button>
           </div>
-          {storeMessage ? <div className="premium-status">{storeMessage}</div> : null}
+          {storeMessage ? (
+            <div className="premium-status">{storeMessage}</div>
+          ) : null}
           <p className="premium-footnote">
             {isNativePlatform()
               ? "On iPhone, premium uses a one-time in-app purchase."
@@ -758,13 +793,20 @@ export default function App() {
     <main className="detail-layout">
       <section className="detail-panel parent-panel">
         <div className="detail-topbar">
-          <button className="back-button" onClick={handleBackHome} type="button">
+          <button
+            className="back-button"
+            onClick={handleBackHome}
+            type="button"
+          >
             ← Back
           </button>
         </div>
         <div className="section-heading">
           <h2>Parent area</h2>
-          <p>Purchases, restore, support, and policy links stay behind an adult gate.</p>
+          <p>
+            Purchases, restore, support, and policy links stay behind an adult
+            gate.
+          </p>
         </div>
         <div className="parent-actions">
           <button onClick={handlePurchasePremium} type="button">
@@ -794,7 +836,9 @@ export default function App() {
             Support
           </button>
         </div>
-        {storeMessage ? <div className="premium-status">{storeMessage}</div> : null}
+        {storeMessage ? (
+          <div className="premium-status">{storeMessage}</div>
+        ) : null}
       </section>
     </main>
   );
@@ -804,7 +848,7 @@ export default function App() {
       <header className="topbar">
         <div className="topbar-row">
           <div className="topbar-title-group">
-            <p className="topbar-eyebrow">Little learners</p>
+            <h2 className="topbar-eyebrow">Emoji for little learners</h2>
             <h1>
               {pageView === "home"
                 ? currentSection.label
@@ -814,11 +858,6 @@ export default function App() {
                     ? "Parent Area"
                     : `${selectedPack?.title ?? "Packs"} ${currentSection.label}`}
             </h1>
-          </div>
-          <div className="topbar-actions">
-            <button className="parent-link" onClick={openParentArea} type="button">
-              Parents
-            </button>
           </div>
         </div>
 
@@ -836,42 +875,51 @@ export default function App() {
         </nav>
       </header>
 
-      {pageView === "home"
-        ? renderHome()
-        : pageView === "premium"
-          ? renderPremium()
-          : pageView === "parent"
-            ? renderParentArea()
-            : (
-              <main className="detail-layout">
-                <section className="detail-panel">
-                  <div className="detail-topbar">
-                    <button className="back-button" onClick={handleBackHome} type="button">
-                      ← Back
-                    </button>
-                    <div className="detail-pack-switcher">
-                      {playablePacks.map((pack) => (
-                        <button
-                          key={`detail-${pack.id}`}
-                          className={`detail-pack-button${selectedPackId === pack.id ? " active" : ""}`}
-                          onClick={() => resetGameState(pack.id)}
-                          type="button"
-                          aria-label={`Switch to ${pack.title}`}
-                        >
-                          {pack.title}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+      {pageView === "home" ? (
+        renderHome()
+      ) : pageView === "premium" ? (
+        renderPremium()
+      ) : pageView === "parent" ? (
+        renderParentArea()
+      ) : (
+        <main className="detail-layout">
+          <section className="detail-panel">
+            <div className="detail-topbar">
+              <button
+                className="back-button"
+                onClick={handleBackHome}
+                type="button"
+              >
+                ← Back
+              </button>
+              <div className="detail-pack-switcher">
+                {playablePacks.map((pack) => (
+                  <button
+                    key={`detail-${pack.id}`}
+                    className={`detail-pack-button${selectedPackId === pack.id ? " active" : ""}`}
+                    onClick={() => resetGameState(pack.id)}
+                    type="button"
+                    aria-label={`Switch to ${pack.title}`}
+                  >
+                    {pack.title}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-                  {renderGameContent()}
-                </section>
-              </main>
-            )}
+            {renderGameContent()}
+          </section>
+        </main>
+      )}
 
       {gateRequest ? (
         <div className="gate-overlay" role="presentation">
-          <div className="gate-modal" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+          <div
+            className="gate-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="gate-title"
+          >
             <h2 id="gate-title">{gateRequest.title}</h2>
             <p>
               Adult check: what is {gateChallenge.left} + {gateChallenge.right}?
@@ -885,10 +933,18 @@ export default function App() {
             />
             {gateError ? <div className="gate-error">{gateError}</div> : null}
             <div className="gate-actions">
-              <button onClick={() => setGateRequest(null)} type="button" disabled={gateBusy}>
+              <button
+                onClick={() => setGateRequest(null)}
+                type="button"
+                disabled={gateBusy}
+              >
                 Cancel
               </button>
-              <button onClick={() => void handleGateSubmit()} type="button" disabled={gateBusy}>
+              <button
+                onClick={() => void handleGateSubmit()}
+                type="button"
+                disabled={gateBusy}
+              >
                 {gateBusy ? "Checking..." : "Continue"}
               </button>
             </div>

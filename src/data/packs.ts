@@ -165,18 +165,18 @@ export const packs: Pack[] = [
       { id: "gray", name: "Gray", emoji: "⚪", swatch: { fill: "#9ca3af" } },
     ],
   },
-  {
-    id: "shapes",
-    title: "Shapes",
-    description: "Premium pack coming soon for early shape recognition.",
-    requiresPremium: true,
-    cards: [],
-  },
-  {
-    id: "farm-animals",
-    title: "Farm Animals",
-    description: "Premium pack coming soon with a farm animal vocabulary set.",
-    requiresPremium: true,
-    cards: [],
-  },
+  // {
+  //   id: "shapes",
+  //   title: "Shapes",
+  //   description: "Premium pack coming soon for early shape recognition.",
+  //   requiresPremium: true,
+  //   cards: [],
+  // },
+  // {
+  //   id: "farm-animals",
+  //   title: "Farm Animals",
+  //   description: "Premium pack coming soon with a farm animal vocabulary set.",
+  //   requiresPremium: true,
+  //   cards: [],
+  // },
 ];
