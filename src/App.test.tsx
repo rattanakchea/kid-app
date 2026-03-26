@@ -20,7 +20,9 @@ describe("App", () => {
 
     fireEvent.click(screen.getAllByRole("button", { name: "Colors pack" })[0]);
 
-    expect(await screen.findByText(/colors flashcards/i)).toBeInTheDocument();
+    expect(
+      await screen.findByRole("heading", { level: 1, name: /colors flashcards/i }),
+    ).toBeInTheDocument();
     expect(screen.queryByText(/unlock premium/i)).not.toBeInTheDocument();
   });
 

@@ -127,7 +127,9 @@ export default function App() {
   const [flippedTileIds, setFlippedTileIds] = useState<string[]>([]);
   const [matchMoves, setMatchMoves] = useState(0);
   const [hasPremiumAccess, setHasPremiumAccess] = useState(false);
-  const [premiumProduct, setPremiumProduct] = useState<PremiumProduct | null>(null);
+  const [premiumProduct, setPremiumProduct] = useState<PremiumProduct | null>(
+    null,
+  );
 
   const speechSynthesisSupported =
     typeof window !== "undefined" && "speechSynthesis" in window;
@@ -147,7 +149,8 @@ export default function App() {
   );
 
   const selectedPack =
-    playablePacks.find((pack) => pack.id === selectedPackId) ?? playablePacks[0];
+    playablePacks.find((pack) => pack.id === selectedPackId) ??
+    playablePacks[0];
 
   const currentSection =
     sections.find((section) => section.id === gameMode) ?? sections[0];
@@ -211,7 +214,8 @@ export default function App() {
   }, [currentCard, gameMode, pageView, speechSynthesisSupported]);
 
   const resetGameState = (packId: string) => {
-    const nextPack = playablePacks.find((pack) => pack.id === packId) ?? playablePacks[0];
+    const nextPack =
+      playablePacks.find((pack) => pack.id === packId) ?? playablePacks[0];
 
     if (!nextPack) {
       return;
@@ -360,7 +364,10 @@ export default function App() {
       return (
         <div className="empty-state">
           <h2>More packs are coming soon</h2>
-          <p>Free packs are ready now, and more content will appear here as it ships.</p>
+          <p>
+            Free packs are ready now, and more content will appear here as it
+            ships.
+          </p>
         </div>
       );
     }
@@ -369,7 +376,8 @@ export default function App() {
       <>
         <div className="section-heading">
           <h2>
-            {selectedPack.title} {gameMode === "flashcards" ? "flashcards" : "pair game"}
+            {selectedPack.title}{" "}
+            {gameMode === "flashcards" ? "flashcards" : "pair game"}
           </h2>
           <p>
             {gameMode === "flashcards"
@@ -405,7 +413,6 @@ export default function App() {
                           : "flashcard-emoji"
                     }
                   />
-                  <div className="flashcard-face-note">Tap card to flip</div>
                 </div>
 
                 <div className="flashcard-face flashcard-back">
@@ -474,7 +481,8 @@ export default function App() {
 
             <div className="match-grid">
               {matchTiles.map((tile) => {
-                const isFlipped = tile.solved || flippedTileIds.includes(tile.id);
+                const isFlipped =
+                  tile.solved || flippedTileIds.includes(tile.id);
 
                 return (
                   <button
@@ -483,7 +491,9 @@ export default function App() {
                     onClick={() => handleTileClick(tile.id)}
                     type="button"
                     disabled={tile.solved}
-                    aria-label={tile.solved ? `${tile.card.name} matched` : "Hidden tile"}
+                    aria-label={
+                      tile.solved ? `${tile.card.name} matched` : "Hidden tile"
+                    }
                   >
                     <span className="match-tile-face match-tile-front">?</span>
                     <span className="match-tile-face match-tile-back">
@@ -505,7 +515,10 @@ export default function App() {
             </div>
 
             <div className="match-footer">
-              <p>Find the two matching pairs. The board resets when you change packs.</p>
+              <p>
+                Find the two matching pairs. The board resets when you change
+                packs.
+              </p>
               <button onClick={handleResetMatchGame} type="button">
                 Shuffle again
               </button>
@@ -531,7 +544,11 @@ export default function App() {
               gameMode === "flashcards" ? "FLASH CARDS" : "PAIR GAMES";
             const previewCards =
               pack.cards.length > 0
-                ? [pack.cards[0], pack.cards[1] ?? pack.cards[0], pack.cards[2] ?? pack.cards[0]]
+                ? [
+                    pack.cards[0],
+                    pack.cards[1] ?? pack.cards[0],
+                    pack.cards[2] ?? pack.cards[0],
+                  ]
                 : [];
 
             return (
@@ -622,7 +639,11 @@ export default function App() {
         <main className="detail-layout">
           <section className="detail-panel">
             <div className="detail-topbar">
-              <button className="back-button" onClick={handleBackHome} type="button">
+              <button
+                className="back-button"
+                onClick={handleBackHome}
+                type="button"
+              >
                 ← Back
               </button>
               <div className="detail-pack-switcher">

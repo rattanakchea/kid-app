@@ -525,7 +525,7 @@ button {
   display: grid;
   place-items: center;
   min-height: 260px;
-  font-size: clamp(7rem, 20vw, 14rem);
+  font-size: clamp(7rem, 30vw, 14rem);
 }
 
 .flashcard-image {
@@ -826,7 +826,7 @@ button {
 
   .flashcard-emoji {
     min-height: 220px;
-    font-size: clamp(5.5rem, 24vw, 14rem);
+    font-size: clamp(5.5rem, 30vw, 14rem);
   }
 }
 
