@@ -30,7 +30,7 @@ export class PremiumUnlockWeb
           title: "Premium Pack Unlock",
           description:
             "Unlock extra themed packs for flashcards and pair games.",
-          displayPrice: "$4.99",
+          displayPrice: "$2.99",
         },
       ],
     };

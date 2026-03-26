@@ -94,3 +94,21 @@ Use `deploy:preview` for an ad hoc preview deployment. Use `deploy:prod` only wh
 ## Next Suggested Step
 
 Add tap-to-hear pronunciation audio and polish feedback for successful matches.
+
+## Xcode
+
+Install Xcode via Mac App Store
+
+Check version of installed Xocde
+
+```bash
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+xcodebuild -version
+```
+
+Open Project in XCode
+
+```bash
+npm run cap:sync
+npm run ios:open
+```

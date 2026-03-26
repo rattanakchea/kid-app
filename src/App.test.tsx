@@ -1,33 +1,31 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import App from "./App";
+import { appConfig } from "./lib/appConfig";
 
 describe("App", () => {
   beforeEach(() => {
     window.localStorage.clear();
   });
 
-  it("shows premium packs on the home screen", () => {
+  it("shows colors as a normal playable pack", () => {
     render(<App />);
 
     expect(screen.getByText("Colors")).toBeInTheDocument();
-    expect(screen.getByText("Shapes")).toBeInTheDocument();
+    expect(screen.queryByText("Shapes")).not.toBeInTheDocument();
   });
 
-  it("opens the premium upsell for locked packs", async () => {
+  it("opens colors directly without premium UI", async () => {
     render(<App />);
 
-    fireEvent.click(screen.getAllByRole("button", { name: "Colors premium pack" })[0]);
+    fireEvent.click(screen.getAllByRole("button", { name: "Colors pack" })[0]);
 
-    expect(await screen.findByText(/unlock premium themed packs/i)).toBeInTheDocument();
+    expect(await screen.findByText(/colors flashcards/i)).toBeInTheDocument();
+    expect(screen.queryByText(/unlock premium/i)).not.toBeInTheDocument();
   });
 
-  it("requires the parent gate before opening the parent area", async () => {
-    render(<App />);
-
-    fireEvent.click(screen.getAllByRole("button", { name: "Parents" })[0]);
-
-    expect(await screen.findByRole("dialog")).toBeInTheDocument();
-    expect(screen.getByText(/adult check:/i)).toBeInTheDocument();
+  it("keeps premium config disabled while purchase plumbing remains configured", () => {
+    expect(appConfig.premiumUiEnabled).toBe(false);
+    expect(appConfig.premiumDisplayPrice).toBe("$2.99");
   });
 });
