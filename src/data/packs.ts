@@ -14,6 +14,7 @@ export type Pack = {
   title: string;
   description: string;
   locked?: boolean;
+  requiresPremium?: boolean;
   modes?: ("flashcards" | "match")[];
   cards: Card[];
 };
@@ -129,6 +130,7 @@ export const packs: Pack[] = [
     title: "Colors",
     description:
       "Learn common color names with bold swatches and simple repetition.",
+    requiresPremium: true,
     cards: [
       { id: "red", name: "Red", emoji: "🔴", swatch: { fill: "#ef4444" } },
       { id: "blue", name: "Blue", emoji: "🔵", swatch: { fill: "#3b82f6" } },
@@ -162,5 +164,19 @@ export const packs: Pack[] = [
       },
       { id: "gray", name: "Gray", emoji: "⚪", swatch: { fill: "#9ca3af" } },
     ],
+  },
+  {
+    id: "shapes",
+    title: "Shapes",
+    description: "Premium pack coming soon for early shape recognition.",
+    requiresPremium: true,
+    cards: [],
+  },
+  {
+    id: "farm-animals",
+    title: "Farm Animals",
+    description: "Premium pack coming soon with a farm animal vocabulary set.",
+    requiresPremium: true,
+    cards: [],
   },
 ];

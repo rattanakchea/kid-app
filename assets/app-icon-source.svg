@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Kid Games icon">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#21b7ba" />
+      <stop offset="100%" stop-color="#ffd33b" />
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg)" />
+  <rect x="170" y="210" width="684" height="604" rx="120" fill="#fff9ef" />
+  <rect x="238" y="290" width="548" height="328" rx="90" fill="#ffffff" stroke="#f0d7a1" stroke-width="28" />
+  <circle cx="390" cy="454" r="92" fill="#22c55e" />
+  <circle cx="512" cy="454" r="92" fill="#3b82f6" />
+  <circle cx="634" cy="454" r="92" fill="#f97316" />
+  <path d="M300 696h424" stroke="#17324d" stroke-linecap="round" stroke-width="36" />
+  <path d="M388 612v168M636 612v168" stroke="#17324d" stroke-linecap="round" stroke-width="36" />
+</svg>
