@@ -105,3 +105,9 @@ The app will be broken, if it depends on the image url from other sources.
 ### Prompt 022
 
 add more data pack 25 more into fruits category, 25 more into animals
+
+## 2026-03-26
+
+### Prompt 023
+
+New Feature: user can slide left and right to move between flashcards

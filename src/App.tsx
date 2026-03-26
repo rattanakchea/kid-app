@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { packs, type Card, type Pack } from "./data/packs";
 import { appConfig } from "./lib/appConfig";
 import {
@@ -130,6 +130,9 @@ export default function App() {
   const [premiumProduct, setPremiumProduct] = useState<PremiumProduct | null>(
     null,
   );
+  const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
+  const suppressFlashcardTapRef = useRef(false);
 
   const speechSynthesisSupported =
     typeof window !== "undefined" && "speechSynthesis" in window;
@@ -310,6 +313,46 @@ export default function App() {
     setIsFlashcardFlipped((flipped) => !flipped);
   };
 
+  const handleFlashcardTouchStart = (
+    event: React.TouchEvent<HTMLElement>,
+  ) => {
+    const touch = event.changedTouches[0];
+    touchStartXRef.current = touch.clientX;
+    touchStartYRef.current = touch.clientY;
+  };
+
+  const handleFlashcardTouchEnd = (event: React.TouchEvent<HTMLElement>) => {
+    const touch = event.changedTouches[0];
+    const startX = touchStartXRef.current;
+    const startY = touchStartYRef.current;
+
+    touchStartXRef.current = null;
+    touchStartYRef.current = null;
+
+    if (startX === null || startY === null) {
+      return;
+    }
+
+    const deltaX = touch.clientX - startX;
+    const deltaY = touch.clientY - startY;
+    const swipeThreshold = 50;
+
+    if (Math.abs(deltaX) < swipeThreshold || Math.abs(deltaY) > Math.abs(deltaX)) {
+      return;
+    }
+
+    if (deltaX < 0 && canGoForward) {
+      suppressFlashcardTapRef.current = true;
+      handleNext();
+      return;
+    }
+
+    if (deltaX > 0 && canGoBack) {
+      suppressFlashcardTapRef.current = true;
+      handlePrevious();
+    }
+  };
+
   const handleTileClick = (tileId: string) => {
     if (flippedTileIds.length === 2) {
       return;
@@ -390,7 +433,16 @@ export default function App() {
           <>
             <div
               className={`flashcard${isFlashcardFlipped ? " flipped" : ""}`}
-              onClick={handleFlipFlashcard}
+              onClick={() => {
+                if (suppressFlashcardTapRef.current) {
+                  suppressFlashcardTapRef.current = false;
+                  return;
+                }
+
+                handleFlipFlashcard();
+              }}
+              onTouchStart={handleFlashcardTouchStart}
+              onTouchEnd={handleFlashcardTouchEnd}
               onKeyDown={(event) => {
                 if (event.key === "Enter" || event.key === " ") {
                   event.preventDefault();

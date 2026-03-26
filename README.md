@@ -11,7 +11,7 @@ Production-minded build for a kid-friendly educational web app, developed in sma
 
 ## Current Status
 
-The repository baseline and MVP product definition are set up, the web app includes flashcards and an initial emoji-to-emoji pair-matching game, and selecting a home card now opens a dedicated detail page instead of keeping everything on one screen.
+The repository baseline and MVP product definition are set up, the web app includes flashcards and an initial emoji-to-emoji pair-matching game, selecting a home card now opens a dedicated detail page instead of keeping everything on one screen, and flashcards support left/right swipe navigation.
 
 ## Product Direction
 
