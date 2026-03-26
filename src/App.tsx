@@ -660,6 +660,7 @@ export default function App() {
                 className={`home-card${packState.locked ? " locked" : ""}`}
                 onClick={() => handleOpenPack(pack)}
                 type="button"
+                aria-label={`${pack.title} ${packState.locked ? "premium pack" : "pack"}`}
               >
                 <div className={`home-card-body tint-${pack.id}`}>
                   <div className="home-card-header">
@@ -855,6 +856,7 @@ export default function App() {
                           className={`detail-pack-button${selectedPackId === pack.id ? " active" : ""}`}
                           onClick={() => resetGameState(pack.id)}
                           type="button"
+                          aria-label={`Switch to ${pack.title}`}
                         >
                           {pack.title}
                         </button>

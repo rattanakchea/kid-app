@@ -17,8 +17,17 @@ describe("App", () => {
   it("opens the premium upsell for locked packs", async () => {
     render(<App />);
 
-    fireEvent.click(screen.getAllByRole("button", { name: /colors/i })[0]);
+    fireEvent.click(screen.getAllByRole("button", { name: "Colors premium pack" })[0]);
 
     expect(await screen.findByText(/unlock premium themed packs/i)).toBeInTheDocument();
+  });
+
+  it("requires the parent gate before opening the parent area", async () => {
+    render(<App />);
+
+    fireEvent.click(screen.getAllByRole("button", { name: "Parents" })[0]);
+
+    expect(await screen.findByRole("dialog")).toBeInTheDocument();
+    expect(screen.getByText(/adult check:/i)).toBeInTheDocument();
   });
 });
