@@ -313,9 +313,7 @@ export default function App() {
     setIsFlashcardFlipped((flipped) => !flipped);
   };
 
-  const handleFlashcardTouchStart = (
-    event: React.TouchEvent<HTMLElement>,
-  ) => {
+  const handleFlashcardTouchStart = (event: React.TouchEvent<HTMLElement>) => {
     const touch = event.changedTouches[0];
     touchStartXRef.current = touch.clientX;
     touchStartYRef.current = touch.clientY;
@@ -337,7 +335,10 @@ export default function App() {
     const deltaY = touch.clientY - startY;
     const swipeThreshold = 50;
 
-    if (Math.abs(deltaX) < swipeThreshold || Math.abs(deltaY) > Math.abs(deltaX)) {
+    if (
+      Math.abs(deltaX) < swipeThreshold ||
+      Math.abs(deltaY) > Math.abs(deltaX)
+    ) {
       return;
     }
 
@@ -424,7 +425,7 @@ export default function App() {
           </h2>
           <p>
             {gameMode === "flashcards"
-              ? "Tap the card to flip between picture and word."
+              ? "Tap the card to flip between picture and word. Swipe left or right to change cards."
               : "Flip tiles and match the same color or picture pair."}
           </p>
         </div>
@@ -698,19 +699,6 @@ export default function App() {
               >
                 ← Back
               </button>
-              <div className="detail-pack-switcher">
-                {playablePacks.map((pack) => (
-                  <button
-                    key={`detail-${pack.id}`}
-                    className={`detail-pack-button${selectedPackId === pack.id ? " active" : ""}`}
-                    onClick={() => resetGameState(pack.id)}
-                    type="button"
-                    aria-label={`Switch to ${pack.title}`}
-                  >
-                    {pack.title}
-                  </button>
-                ))}
-              </div>
             </div>
 
             {renderGameContent()}

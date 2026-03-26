@@ -372,12 +372,6 @@ button {
   font-weight: 700;
 }
 
-.detail-pack-switcher {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
 .detail-pack-button {
   padding: 12px 18px;
   border: 1px solid #c9d9e5;
