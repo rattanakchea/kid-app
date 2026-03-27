@@ -613,9 +613,6 @@ export default function App() {
                 aria-label={`${pack.title} pack`}
               >
                 <div className={`home-card-body tint-${pack.id}`}>
-                  <div className="home-card-header">
-                    <p className="home-card-kicker">{currentSection.label}</p>
-                  </div>
                   <h3>{pack.title}</h3>
                   <p className="home-card-description">{pack.description}</p>
                   <div className="card-stack" aria-hidden="true">

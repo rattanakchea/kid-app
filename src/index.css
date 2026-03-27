@@ -216,6 +216,8 @@ button {
 }
 
 .home-card-body {
+  display: flex;
+  flex-direction: column;
   min-height: 320px;
   padding: 22px 18px 24px;
 }
@@ -273,12 +275,14 @@ button {
   margin: 10px 0 0;
   color: #4f667b;
   font-size: 0.95rem;
+  min-height: 3.25rem;
 }
 
 .card-stack {
   position: relative;
   height: 220px;
-  margin-top: 28px;
+  margin-top: auto;
+  padding-top: 28px;
 }
 
 .stack-card {
@@ -795,9 +799,14 @@ button {
     font-size: clamp(1.6rem, 5vw, 2.4rem);
   }
 
+  .home-card-description {
+    min-height: 4.2rem;
+    font-size: 0.9rem;
+  }
+
   .card-stack {
     height: 150px;
-    margin-top: 18px;
+    padding-top: 18px;
     opacity: 0.75;
   }
 

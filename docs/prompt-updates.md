@@ -111,3 +111,7 @@ add more data pack 25 more into fruits category, 25 more into animals
 ### Prompt 023
 
 New Feature: user can slide left and right to move between flashcards
+
+### Prompt 023
+
+Fix the UI issue with space gap in certain card seen in screenshot
