@@ -115,3 +115,7 @@ New Feature: user can slide left and right to move between flashcards
 ### Prompt 023
 
 Fix the UI issue with space gap in certain card seen in screenshot
+
+### Prompt 025
+
+Change app name: Kid Games to Emoji Learning Flashcard Game for Kids

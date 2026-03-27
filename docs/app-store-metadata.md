@@ -2,7 +2,7 @@
 
 ## App
 
-- Name: Kid Games
+- Name: Emoji Learning Flashcard Game for Kids
 - Subtitle: Flashcards and Pair Games
 - Bundle ID: `com.rattanakchea.kidgames`
 - SKU: `kid-games-ios`
@@ -11,7 +11,7 @@
 
 ## Description
 
-Kid Games is a simple educational app for preschool and early kindergarten learners. Kids can explore themed flashcards, hear words aloud, and play matching games designed for short, repeatable learning sessions.
+Emoji Learning Flashcard Game for Kids is a simple educational app for preschool and early kindergarten learners. Kids can explore themed flashcards, hear words aloud, and play matching games designed for short, repeatable learning sessions.
 The first iOS release is focused on a simple, polished learning experience with no active in-app purchase flow exposed in the product UI.
 
 ## Promotional Text

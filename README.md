@@ -1,4 +1,4 @@
-# Kid App
+# Emoji Learning Flashcard Game for Kids
 
 Production-minded build for a kid-friendly educational web app, developed in small safe increments.
 

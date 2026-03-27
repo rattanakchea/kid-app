@@ -1,6 +1,6 @@
 # Release Hardening Checklist
 
-This document captures the current release posture for the first iOS launch of Kid Games.
+This document captures the current release posture for the first iOS launch of Emoji Learning Flashcard Game for Kids.
 
 ## Launch Position
 
