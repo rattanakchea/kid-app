@@ -11,15 +11,15 @@ Production-minded build for a kid-friendly educational web app, developed in sma
 
 ## Current Status
 
-The repository baseline and MVP product definition are set up, the web app includes flashcards and an initial emoji-to-emoji pair-matching game, selecting a home card now opens a dedicated detail page instead of keeping everything on one screen, and flashcards support left/right swipe navigation.
+The repository baseline and MVP product definition are set up, the app includes flashcards and pair matching across several content packs, the iOS Capacitor shell is present, and dormant one-time purchase plumbing exists without being exposed in the product UI.
 
 ## Product Direction
 
-- The first product is a browser-first educational app for young kids.
+- The first product is a simple educational app for young kids, shipped on the web and prepared for an iOS release.
 - The initial learning modes are flashcards and pair matching.
-- The first content packs are first words, animals, and fruits, with larger animals and fruits vocab libraries.
+- The current launch packs are first words, animals, fruits, and colors.
 - `First Words` is flashcards-only for now and uses bundled in-app image cards instead of external URLs.
-- The monetization path is free starter content plus premium content unlocks.
+- One-time purchase support is being prepared for iOS, but premium UI remains disabled for the first release.
 
 ## Working Approach
 
@@ -34,6 +34,7 @@ The repository baseline and MVP product definition are set up, the web app inclu
 - `docs/prompt-updates.md`: chronological log of user prompts and operating requests.
 - `docs/architecture.md`: lightweight product and technical direction.
 - `docs/mvp-spec.md`: one-page MVP definition for the first releasable version.
+- `docs/release-hardening.md`: iOS release validation and App Store readiness checklist.
 - `src/`: app source for the browser-first MVP.
 
 ## Stack
@@ -41,8 +42,9 @@ The repository baseline and MVP product definition are set up, the web app inclu
 - Vite
 - React
 - TypeScript
+- Capacitor iOS shell
 
-This is the simplest maintainable option for a browser-first MVP with no immediate backend requirements.
+This keeps the product simple, offline-friendly on iOS, and free of backend dependencies for the first release.
 
 ## Deployment
 
@@ -91,24 +93,42 @@ npm run deploy:prod
 
 Use `deploy:preview` for an ad hoc preview deployment. Use `deploy:prod` only when you intentionally want a production deployment outside the normal GitHub push flow.
 
-## Next Suggested Step
+## Release Focus
 
-Add tap-to-hear pronunciation audio and polish feedback for successful matches.
+- Keep `npm test` and `npm run build` green before native changes.
+- Validate the iOS shell on simulator, real device, offline launch, and one archive build.
+- Replace placeholder support/privacy details with production URLs and contact information before submission.
+- Keep monetization UI hidden until post-launch feedback justifies activating it.
 
 ## Xcode
 
-Install Xcode via Mac App Store
+Install Xcode via Mac App Store.
 
-Check version of installed Xocde
+Check the selected Xcode path and version:
 
 ```bash
 sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 xcodebuild -version
 ```
 
-Open Project in XCode
+Sync web assets into the native shell and open the project:
 
 ```bash
 npm run cap:sync
 npm run ios:open
 ```
+
+Recommended validation order:
+
+```bash
+npm test
+npm run build
+npm run cap:sync
+```
+
+Then validate in Xcode:
+
+- simulator launch
+- real-device launch
+- offline launch
+- archive build

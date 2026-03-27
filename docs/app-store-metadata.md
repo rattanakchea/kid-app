@@ -12,12 +12,11 @@
 ## Description
 
 Kid Games is a simple educational app for preschool and early kindergarten learners. Kids can explore themed flashcards, hear words aloud, and play matching games designed for short, repeatable learning sessions.
-
-Premium unlocks are handled as a one-time in-app purchase and parent-facing actions are protected by a parental gate.
+The first iOS release is focused on a simple, polished learning experience with no active in-app purchase flow exposed in the product UI.
 
 ## Promotional Text
 
-Simple, kid-friendly flashcards and matching games with a parent-protected premium unlock.
+Simple, kid-friendly flashcards and matching games for short daily learning sessions.
 
 ## Keywords
 
@@ -26,12 +25,13 @@ kids, flashcards, matching, preschool, toddler, learning, colors, animals, fruit
 ## Review Notes
 
 - The app uses bundled web assets inside a Capacitor iOS shell.
-- Free packs are available immediately.
-- Premium content is a one-time in-app purchase.
-- Purchase, restore, support, and privacy actions are behind a parental gate.
+- All visible content in the first iOS release is playable without purchase.
+- StoreKit groundwork exists in the codebase for a future one-time unlock, but no purchase or restore UI is exposed in this release.
 - No third-party ads are included.
+- No third-party analytics SDKs are included in the first iOS release.
 
 ## URLs
 
-- Privacy policy: replace with production HTTPS URL before submission
-- Support URL: replace with production HTTPS URL before submission
+- Privacy policy: https://skill-deploy-c9e20wj9si.vercel.app/privacy.html
+- Support URL: https://skill-deploy-c9e20wj9si.vercel.app/support.html
+- Contact email: rattanak.chea@gmail.com
