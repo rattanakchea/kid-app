@@ -127,3 +127,20 @@ space gap css issue still exists in mobile device. see screenshot
 ### Prompt 027
 
 2
+
+### Prompt 028
+
+Error with xcode, the app icon cannot transparent
+
+### Prompt 029
+
+The app icon cannot transparent
+
+## 2026-03-28
+
+### Prompt 030
+
+improvment app description from below text to include: please provide feedback in comments, regular updates to the app content.
+Emoji Learning Flashcard Game for Kids is a simple educational app for preschool and early kindergarten learners.
+
+Kids can explore themed flashcards, hear words aloud, and play matching games designed for short, repeatable learning sessions. The first iOS release focuses on a simple, polished learning experience. Current activities include: - Flashcards with tap-to-hear pronunciation - Pair matching for early vocabulary practice - Color, animal, fruit, and first-word learning packs. The app is designed to feel lightweight, easy to understand, and friendly for short parent-guided or independent sessions.

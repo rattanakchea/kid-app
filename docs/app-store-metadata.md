@@ -11,9 +11,9 @@
 
 ## Description
 
-Kid Games is a simple educational app for preschool and early kindergarten learners. Kids can explore themed flashcards, hear words aloud, and play matching games designed for short, repeatable learning sessions.
+Emoji Learning Flashcard Game for Kids is a simple educational app for preschool and early kindergarten learners.
 
-The first iOS release focuses on a simple, polished learning experience with no active in-app purchase flow exposed in the product UI.
+Kids can explore themed flashcards, hear words aloud, and play matching games designed for short, repeatable learning sessions. The first iOS release focuses on a simple, polished learning experience that feels lightweight, easy to understand, and friendly for short parent-guided or independent sessions.
 
 Current activities include:
 
@@ -21,7 +21,7 @@ Current activities include:
 - Pair matching for early vocabulary practice
 - Color, animal, fruit, and first-word learning packs
 
-The app is designed to feel lightweight, easy to understand, and friendly for short parent-guided or independent sessions.
+We plan to update the app regularly with new learning content and improvements. Please share your feedback in the App Store comments to help shape future updates.
 
 ## Promotional Text
 
