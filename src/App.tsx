@@ -660,7 +660,7 @@ export default function App() {
       <header className="topbar">
         <div className="topbar-row">
           <div className="topbar-title-group">
-            <p className="topbar-eyebrow">Little learners</p>
+            <p className="topbar-eyebrow">Emoji Flashcards</p>
             <h1>
               {pageView === "home"
                 ? currentSection.label
