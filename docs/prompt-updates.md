@@ -123,3 +123,7 @@ Change app name: Kid Games to Emoji Learning Flashcard Game for Kids
 ### Prompt 026
 
 space gap css issue still exists in mobile device. see screenshot
+
+### Prompt 027
+
+2
