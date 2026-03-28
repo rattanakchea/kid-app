@@ -660,12 +660,7 @@ export default function App() {
       <header className="topbar">
         <div className="topbar-row">
           <div className="topbar-title-group">
-            <p className="topbar-eyebrow">Emoji Flashcards</p>
-            <h1>
-              {pageView === "home"
-                ? currentSection.label
-                : `${selectedPack?.title ?? "Packs"} ${currentSection.label}`}
-            </h1>
+            <h2 className="topbar-eyebrow">Emoji Flashcards</h2>
           </div>
         </div>
 
