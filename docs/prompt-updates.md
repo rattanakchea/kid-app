@@ -119,3 +119,7 @@ Fix the UI issue with space gap in certain card seen in screenshot
 ### Prompt 025
 
 Change app name: Kid Games to Emoji Learning Flashcard Game for Kids
+
+### Prompt 026
+
+space gap css issue still exists in mobile device. see screenshot

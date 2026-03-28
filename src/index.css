@@ -792,21 +792,26 @@ button {
 
   .home-card-body {
     min-height: 260px;
-    padding: 16px 12px 18px;
+    padding: 10px 12px 14px;
   }
 
   .home-card-body h3 {
+    min-height: 1.9em;
+    line-height: 0.95;
     font-size: clamp(1.6rem, 5vw, 2.4rem);
   }
 
   .home-card-description {
-    min-height: 4.2rem;
-    font-size: 0.9rem;
+    min-height: auto;
+    max-height: 2.7em;
+    line-height: 1.35;
+    overflow: hidden;
+    font-size: 0.86rem;
   }
 
   .card-stack {
-    height: 150px;
-    padding-top: 18px;
+    height: 144px;
+    padding-top: 8px;
     opacity: 0.75;
   }
 

@@ -103,3 +103,80 @@ Add a fully playable `Colors` category to both flashcards and pair matching, usi
 - The implementation should prioritize a maintainable content model over the fastest one-off visual hack.
 - The color list should be broad but limited to common, parent-friendly names rather than niche design-system names.
 - SVG swatches should be simple geometric shapes with optional border styling, not illustrative assets.
+
+## Custom Flashcard Plan
+
+Add a built-in `Custom Flashcards` category that lets the user create personal flashcards by uploading a photo and entering a label such as `table`. In v1, custom cards are stored only on the current device, are available in flashcard mode only, and support add plus delete actions. The custom pack should behave like a normal home-screen category so the feature is easy to discover.
+
+## Key Changes
+
+- Add a local-only custom pack layer on top of the existing static `packs` data.
+  - Keep built-in packs unchanged.
+  - Introduce a persisted `customCards` collection in `localStorage`.
+  - Derive a synthetic `custom` pack at runtime with title `Custom Flashcards`, a short description, and cards from storage.
+- Extend the card model for user-created cards.
+  - Add a stable `id` generated on creation.
+  - Add `imageUrl` support for uploaded photos stored as a data URL.
+  - Add a marker such as `source?: "builtin" | "custom"` only if needed to simplify delete behavior.
+  - Keep `emoji` required for built-in cards, but allow custom cards to use a simple fallback emoji like `🖼️` when an uploaded image is present.
+- Add a creation flow inside the custom pack.
+  - The custom pack appears on the home grid in flashcard mode like any other category.
+  - Opening the custom pack shows:
+    - the normal flashcard player when cards exist
+    - an empty state when no cards exist
+    - an `Add flashcard` action
+  - The add flow collects:
+    - one image file from the device
+    - one required text label
+  - On save, create a custom card, persist it, refresh the custom pack, and open that new card.
+- Add simple management for v1.
+  - Allow deleting a custom card from the custom pack detail screen.
+  - No in-place edit flow in v1.
+  - No custom cards in pair matching.
+- Add validation and guardrails.
+  - Require both image and text before saving.
+  - Trim text input and reject empty labels.
+  - Limit uploads to common image types supported by browser file inputs.
+  - If the custom pack has fewer than one card, show the empty-state add prompt instead of the player.
+  - If speech synthesis is available, custom labels should pronounce the entered text just like built-in cards.
+
+## Public Interfaces / Types
+
+- Add a persisted custom-card type, either by extending `Card` or with a small companion type:
+  - `id: string`
+  - `name: string`
+  - `imageUrl: string`
+  - optional source marker for custom-only actions
+- Add a storage key for custom flashcards in `localStorage`.
+- Add a small helper layer for:
+  - loading custom cards
+  - saving a new custom card
+  - deleting a custom card
+  - deriving the runtime custom pack
+- No backend, sync, or account interfaces in v1.
+
+## Test Plan
+
+- Creation flow:
+  - Add a custom flashcard with image + text and confirm it appears in the custom pack.
+  - Confirm the new card persists after reload.
+  - Confirm save is blocked when image or text is missing.
+- Flashcard behavior:
+  - Confirm custom cards flip, pronounce, and navigate like built-in flashcards.
+  - Confirm the custom pack is visible on the home screen in flashcard mode.
+  - Confirm the custom pack does not appear in pair-game mode.
+- Management:
+  - Delete a custom card and confirm it disappears immediately and stays deleted after reload.
+  - Confirm the empty state appears when the last custom card is removed.
+- Regression:
+  - Built-in packs still render and behave the same.
+  - Premium UI remains inactive.
+  - Pair matching still uses only built-in packs.
+
+## Assumptions
+
+- V1 storage is this-device-only via `localStorage`.
+- V1 scope is add plus delete, not edit.
+- The custom pack is always visible on the flashcards home screen so users can add their first card.
+- Uploaded images are stored locally as data URLs rather than uploaded to a server.
+- Custom cards are excluded from pair matching in v1 even if enough cards exist.
