@@ -127,9 +127,7 @@ export default function App() {
   const [flippedTileIds, setFlippedTileIds] = useState<string[]>([]);
   const [matchMoves, setMatchMoves] = useState(0);
   const [hasPremiumAccess, setHasPremiumAccess] = useState(false);
-  const [, setPremiumProduct] = useState<PremiumProduct | null>(
-    null,
-  );
+  const [, setPremiumProduct] = useState<PremiumProduct | null>(null);
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
   const suppressFlashcardTapRef = useRef(false);
@@ -611,21 +609,16 @@ export default function App() {
 
   const renderHome = () => (
     <main className="home-layout" id="main-content">
-      <section className="hero-panel" aria-labelledby="app-title">
+      {/* <section className="hero-panel" aria-labelledby="app-title">
         <p className="topbar-eyebrow">Playful learning for toddlers</p>
         <h1 id="app-title">Emoji Flashcards</h1>
         <p className="hero-copy">
           Pick a pack, flip through big visual cards, or switch to a quick
           matching game.
         </p>
-      </section>
+      </section> */}
 
       <section className="card-grid-panel">
-        <div className="section-heading">
-          <h2>{currentSection.label}</h2>
-          <p>Choose a pack to start a short, repeatable practice session.</p>
-        </div>
-
         <div className="home-card-grid">
           {playablePacks.map((pack) => {
             const footerLabel =
@@ -699,7 +692,7 @@ export default function App() {
       <header className="topbar">
         <div className="topbar-row">
           <p className="topbar-summary">
-            Quick vocabulary practice with flashcards and pair games.
+            <strong>Emoji Flashcards</strong> - Quick vocabulary practice
           </p>
         </div>
 
