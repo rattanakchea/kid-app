@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { startTransition, useEffect, useMemo, useRef, useState } from "react";
 import { packs, type Card, type Pack } from "./data/packs";
 import { appConfig } from "./lib/appConfig";
 import {
@@ -127,12 +127,13 @@ export default function App() {
   const [flippedTileIds, setFlippedTileIds] = useState<string[]>([]);
   const [matchMoves, setMatchMoves] = useState(0);
   const [hasPremiumAccess, setHasPremiumAccess] = useState(false);
-  const [premiumProduct, setPremiumProduct] = useState<PremiumProduct | null>(
+  const [, setPremiumProduct] = useState<PremiumProduct | null>(
     null,
   );
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
   const suppressFlashcardTapRef = useRef(false);
+  const flipBackTimeoutRef = useRef<number | null>(null);
 
   const speechSynthesisSupported =
     typeof window !== "undefined" && "speechSynthesis" in window;
@@ -189,11 +190,7 @@ export default function App() {
       return;
     }
 
-    setCurrentCardIndex(0);
-    setIsFlashcardFlipped(false);
-    setFlippedTileIds([]);
-    setMatchMoves(0);
-    setMatchTiles(createMatchTiles(selectedPack));
+    resetPackProgress(selectedPack);
   }, [selectedPack]);
 
   useEffect(() => {
@@ -202,6 +199,14 @@ export default function App() {
       setPageView("home");
     }
   }, [playablePacks, selectedPack]);
+
+  useEffect(() => {
+    return () => {
+      if (flipBackTimeoutRef.current !== null) {
+        window.clearTimeout(flipBackTimeoutRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (!speechSynthesisSupported || !currentCard) {
@@ -216,6 +221,22 @@ export default function App() {
     };
   }, [currentCard, gameMode, pageView, speechSynthesisSupported]);
 
+  const clearPendingFlipBack = () => {
+    if (flipBackTimeoutRef.current !== null) {
+      window.clearTimeout(flipBackTimeoutRef.current);
+      flipBackTimeoutRef.current = null;
+    }
+  };
+
+  const resetPackProgress = (pack: Pack) => {
+    clearPendingFlipBack();
+    setCurrentCardIndex(0);
+    setIsFlashcardFlipped(false);
+    setFlippedTileIds([]);
+    setMatchMoves(0);
+    setMatchTiles(createMatchTiles(pack));
+  };
+
   const resetGameState = (packId: string) => {
     const nextPack =
       playablePacks.find((pack) => pack.id === packId) ?? playablePacks[0];
@@ -224,22 +245,24 @@ export default function App() {
       return;
     }
 
-    setSelectedPackId(nextPack.id);
-    setCurrentCardIndex(0);
-    setIsFlashcardFlipped(false);
-    setFlippedTileIds([]);
-    setMatchMoves(0);
-    setMatchTiles(createMatchTiles(nextPack));
+    startTransition(() => {
+      setSelectedPackId(nextPack.id);
+    });
+    resetPackProgress(nextPack);
   };
 
   const handleSelectMode = (mode: GameMode) => {
-    setGameMode(mode);
-    setPageView("home");
+    startTransition(() => {
+      setGameMode(mode);
+      setPageView("home");
+    });
   };
 
   const handleOpenPack = (pack: Pack) => {
     resetGameState(pack.id);
-    setPageView("detail");
+    startTransition(() => {
+      setPageView("detail");
+    });
   };
 
   const handleBackHome = () => {
@@ -304,6 +327,7 @@ export default function App() {
       return;
     }
 
+    clearPendingFlipBack();
     setFlippedTileIds([]);
     setMatchMoves(0);
     setMatchTiles(createMatchTiles(selectedPack));
@@ -398,8 +422,10 @@ export default function App() {
       return;
     }
 
-    window.setTimeout(() => {
+    clearPendingFlipBack();
+    flipBackTimeoutRef.current = window.setTimeout(() => {
       setFlippedTileIds([]);
+      flipBackTimeoutRef.current = null;
     }, 700);
   };
 
@@ -419,10 +445,10 @@ export default function App() {
     return (
       <>
         <div className="section-heading">
-          <h2>
+          <h1>
             {selectedPack.title}{" "}
             {gameMode === "flashcards" ? "flashcards" : "pair game"}
-          </h2>
+          </h1>
           <p>
             {gameMode === "flashcards"
               ? "Tap the card to flip between picture and word. Swipe left or right to change cards."
@@ -432,28 +458,23 @@ export default function App() {
 
         {gameMode === "flashcards" ? (
           <>
-            <div
-              className={`flashcard${isFlashcardFlipped ? " flipped" : ""}`}
-              onClick={() => {
-                if (suppressFlashcardTapRef.current) {
-                  suppressFlashcardTapRef.current = false;
-                  return;
-                }
+            <div className={`flashcard${isFlashcardFlipped ? " flipped" : ""}`}>
+              <button
+                className="flashcard-toggle"
+                onClick={() => {
+                  if (suppressFlashcardTapRef.current) {
+                    suppressFlashcardTapRef.current = false;
+                    return;
+                  }
 
-                handleFlipFlashcard();
-              }}
-              onTouchStart={handleFlashcardTouchStart}
-              onTouchEnd={handleFlashcardTouchEnd}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                  event.preventDefault();
                   handleFlipFlashcard();
-                }
-              }}
-              role="button"
-              tabIndex={0}
-              aria-label={`Flip flashcard for ${currentCard.name}`}
-            >
+                }}
+                onTouchStart={handleFlashcardTouchStart}
+                onTouchEnd={handleFlashcardTouchEnd}
+                type="button"
+                aria-label={`Flip flashcard for ${currentCard.name}`}
+                aria-pressed={isFlashcardFlipped}
+              />
               <div className="flashcard-inner">
                 <div className="flashcard-face flashcard-front">
                   <CardVisual
@@ -492,7 +513,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="flashcard-meta">
+            <div className="flashcard-meta" aria-live="polite">
               <div className="flashcard-progress">
                 Card {currentCardIndex + 1} of {selectedPack.cards.length}
               </div>
@@ -522,7 +543,7 @@ export default function App() {
           </>
         ) : (
           <>
-            <div className="match-status">
+            <div className="match-status" aria-live="polite">
               <div>
                 <strong>{selectedPack.title}</strong> matching board
               </div>
@@ -578,7 +599,7 @@ export default function App() {
             </div>
 
             {matchComplete ? (
-              <div className="match-success">
+              <div className="match-success" aria-live="polite">
                 Nice work. You matched every pair in {matchMoves} moves.
               </div>
             ) : null}
@@ -589,8 +610,22 @@ export default function App() {
   };
 
   const renderHome = () => (
-    <main className="home-layout">
+    <main className="home-layout" id="main-content">
+      <section className="hero-panel" aria-labelledby="app-title">
+        <p className="topbar-eyebrow">Playful learning for toddlers</p>
+        <h1 id="app-title">Emoji Flashcards</h1>
+        <p className="hero-copy">
+          Pick a pack, flip through big visual cards, or switch to a quick
+          matching game.
+        </p>
+      </section>
+
       <section className="card-grid-panel">
+        <div className="section-heading">
+          <h2>{currentSection.label}</h2>
+          <p>Choose a pack to start a short, repeatable practice session.</p>
+        </div>
+
         <div className="home-card-grid">
           {playablePacks.map((pack) => {
             const footerLabel =
@@ -657,11 +692,15 @@ export default function App() {
 
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
+
       <header className="topbar">
         <div className="topbar-row">
-          <div className="topbar-title-group">
-            <h2 className="topbar-eyebrow">Emoji Flashcards</h2>
-          </div>
+          <p className="topbar-summary">
+            Quick vocabulary practice with flashcards and pair games.
+          </p>
         </div>
 
         <nav className="section-menu" aria-label="Game sections">
@@ -671,6 +710,7 @@ export default function App() {
               className={`section-tab${gameMode === section.id ? " active" : ""}`}
               onClick={() => handleSelectMode(section.id)}
               type="button"
+              aria-pressed={gameMode === section.id}
             >
               {section.label}
             </button>
@@ -681,7 +721,7 @@ export default function App() {
       {pageView === "home" ? (
         renderHome()
       ) : (
-        <main className="detail-layout">
+        <main className="detail-layout" id="main-content">
           <section className="detail-panel">
             <div className="detail-topbar">
               <button

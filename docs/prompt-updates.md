@@ -144,3 +144,7 @@ improvment app description from below text to include: please provide feedback i
 Emoji Learning Flashcard Game for Kids is a simple educational app for preschool and early kindergarten learners.
 
 Kids can explore themed flashcards, hear words aloud, and play matching games designed for short, repeatable learning sessions. The first iOS release focuses on a simple, polished learning experience. Current activities include: - Flashcards with tap-to-hear pronunciation - Pair matching for early vocabulary practice - Color, animal, fruit, and first-word learning packs. The app is designed to feel lightweight, easy to understand, and friendly for short parent-guided or independent sessions.
+
+### Prompt 030
+
+prepare this screenshot for ios and ipad screenshots
