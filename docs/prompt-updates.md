@@ -148,3 +148,7 @@ Kids can explore themed flashcards, hear words aloud, and play matching games de
 ### Prompt 030
 
 prepare this screenshot for ios and ipad screenshots
+
+### Prompt 031
+
+make flashcard picker home page have 2 column for mobile display
