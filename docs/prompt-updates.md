@@ -152,3 +152,11 @@ prepare this screenshot for ios and ipad screenshots
 ### Prompt 031
 
 make flashcard picker home page have 2 column for mobile display
+
+### Prompt 032
+
+PLEASE IMPLEMENT THIS PLAN:
+# Finalize App Icon for App Store Resubmission
+
+## Summary
+Replace the current text-heavy, draft-looking icon with a finalized single-symbol icon that reads clearly at small sizes and is consistent across all app-facing surfaces. The new icon should use one bold flashcard mark, no text, no emoji glyphs, no placeholder feel, and a polished kid-friendly palette that matches the app’s current teal/yellow visual direction.

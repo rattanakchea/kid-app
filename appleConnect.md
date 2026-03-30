@@ -2,10 +2,9 @@
 
 ## App Information
 
-- App Name: `Kid Games`
+- App Name: `Emoji Flashcards`
 - Subtitle: `Flashcards and Pair Games`
 - Primary Category: `Education`
-- Kids Category: `Ages 5 and Under`
 - Copyright: `Rattanak Chea`
 - Privacy Policy URL: `https://skill-deploy-c9e20wj9si.vercel.app/privacy.html`
 - Support URL: `https://skill-deploy-c9e20wj9si.vercel.app/support.html`
