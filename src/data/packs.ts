@@ -19,6 +19,105 @@ export type Pack = {
   cards: Card[];
 };
 
+function svgDataUrl(svg: string) {
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
+function createShapeCard({
+  id,
+  name,
+  color,
+  markup,
+}: {
+  id: string;
+  name: string;
+  color: string;
+  markup: string;
+}): Card {
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="${name}">
+      <rect width="240" height="240" rx="48" fill="#fff8ea" />
+      <rect x="20" y="20" width="200" height="200" rx="40" fill="#ffffff" stroke="#f2e4c2" stroke-width="8" />
+      <g fill="${color}" stroke="${color}" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+        ${markup}
+      </g>
+    </svg>
+  `;
+
+  return {
+    id,
+    name,
+    emoji: "🔷",
+    imageUrl: svgDataUrl(svg),
+  };
+}
+
+const shapeCards: Card[] = [
+  createShapeCard({
+    id: "circle",
+    name: "Circle",
+    color: "#ef4444",
+    markup: '<circle cx="120" cy="120" r="56" />',
+  }),
+  createShapeCard({
+    id: "square",
+    name: "Square",
+    color: "#3b82f6",
+    markup: '<rect x="64" y="64" width="112" height="112" rx="12" />',
+  }),
+  createShapeCard({
+    id: "triangle",
+    name: "Triangle",
+    color: "#22c55e",
+    markup: '<polygon points="120,54 184,174 56,174" />',
+  }),
+  createShapeCard({
+    id: "rectangle",
+    name: "Rectangle",
+    color: "#f97316",
+    markup: '<rect x="48" y="78" width="144" height="84" rx="12" />',
+  }),
+  createShapeCard({
+    id: "oval",
+    name: "Oval",
+    color: "#a855f7",
+    markup: '<ellipse cx="120" cy="120" rx="70" ry="48" />',
+  }),
+  createShapeCard({
+    id: "star",
+    name: "Star",
+    color: "#facc15",
+    markup:
+      '<polygon points="120,46 140,92 190,96 152,128 164,178 120,150 76,178 88,128 50,96 100,92" />',
+  }),
+  createShapeCard({
+    id: "heart",
+    name: "Heart",
+    color: "#ec4899",
+    markup:
+      '<path d="M120 184 C54 142 44 100 44 78 C44 52 64 36 88 36 C104 36 116 44 120 56 C124 44 136 36 152 36 C176 36 196 52 196 78 C196 100 186 142 120 184 Z" />',
+  }),
+  createShapeCard({
+    id: "diamond",
+    name: "Diamond",
+    color: "#14b8a6",
+    markup: '<polygon points="120,42 186,120 120,198 54,120" />',
+  }),
+  createShapeCard({
+    id: "hexagon",
+    name: "Hexagon",
+    color: "#8b5cf6",
+    markup: '<polygon points="84,54 156,54 192,120 156,186 84,186 48,120" />',
+  }),
+  createShapeCard({
+    id: "crescent",
+    name: "Crescent",
+    color: "#0ea5e9",
+    markup:
+      '<path d="M144 50 C104 50 72 82 72 122 C72 162 104 194 144 194 C117 182 98 154 98 122 C98 90 117 62 144 50 Z" />',
+  }),
+];
+
 export const packs: Pack[] = [
   {
     id: "first-words",
@@ -165,13 +264,12 @@ export const packs: Pack[] = [
       { id: "gray", name: "Gray", emoji: "⚪", swatch: { fill: "#9ca3af" } },
     ],
   },
-  // {
-  //   id: "shapes",
-  //   title: "Shapes",
-  //   description: "Premium pack coming soon for early shape recognition.",
-  //   requiresPremium: true,
-  //   cards: [],
-  // },
+  {
+    id: "shapes",
+    title: "Shapes",
+    description: "Practice common shapes with clear, colorful learning cards.",
+    cards: shapeCards,
+  },
   // {
   //   id: "farm-animals",
   //   title: "Farm Animals",

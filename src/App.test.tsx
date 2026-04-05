@@ -5,7 +5,24 @@ import { appConfig } from "./lib/appConfig";
 
 describe("App", () => {
   beforeEach(() => {
-    window.localStorage.clear();
+    const storage = new Map<string, string>();
+
+    Object.defineProperty(window, "localStorage", {
+      configurable: true,
+      value: {
+        getItem: vi.fn((key: string) => storage.get(key) ?? null),
+        setItem: vi.fn((key: string, value: string) => {
+          storage.set(key, value);
+        }),
+        removeItem: vi.fn((key: string) => {
+          storage.delete(key);
+        }),
+        clear: vi.fn(() => {
+          storage.clear();
+        }),
+      },
+    });
+
     Object.defineProperty(window, "SpeechSynthesisUtterance", {
       configurable: true,
       value: class {
@@ -22,6 +39,7 @@ describe("App", () => {
         }
       },
     });
+
     Object.defineProperty(window, "speechSynthesis", {
       configurable: true,
       value: {
@@ -35,14 +53,12 @@ describe("App", () => {
     cleanup();
   });
 
-  it("shows colors as a normal playable pack", () => {
+  it("shows shapes as a normal playable pack", () => {
     render(<App />);
 
-    expect(
-      screen.getByRole("heading", { level: 1, name: "Emoji Flashcards" }),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Emoji Flashcards")).toBeInTheDocument();
     expect(screen.getByText("Colors")).toBeInTheDocument();
-    expect(screen.queryByText("Shapes")).not.toBeInTheDocument();
+    expect(screen.getByText("Shapes")).toBeInTheDocument();
   });
 
   it("opens colors directly without premium UI", async () => {
@@ -57,6 +73,20 @@ describe("App", () => {
       screen.getByRole("button", { name: /flip flashcard for red/i }),
     ).toBeInTheDocument();
     expect(screen.queryByText(/unlock premium/i)).not.toBeInTheDocument();
+  });
+
+  it("shows shapes in pair games and opens the matching board", async () => {
+    render(<App />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Pair Games" }));
+    fireEvent.click(screen.getAllByRole("button", { name: "Shapes pack" })[0]);
+
+    expect(
+      await screen.findByRole("heading", { level: 1, name: /shapes pair game/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText((_, element) => element?.textContent === "Shapes matching board"),
+    ).toBeInTheDocument();
   });
 
   it("keeps the hear button clickable after flipping a flashcard", async () => {
@@ -91,6 +121,6 @@ describe("App", () => {
 
   it("keeps premium config disabled while purchase plumbing remains configured", () => {
     expect(appConfig.premiumUiEnabled).toBe(false);
-    expect(appConfig.premiumDisplayPrice).toBe("$2.99");
+    expect(appConfig.premiumDisplayPrice).toBe(String.fromCharCode(36) + "2.99");
   });
 });

@@ -160,3 +160,7 @@ PLEASE IMPLEMENT THIS PLAN:
 
 ## Summary
 Replace the current text-heavy, draft-looking icon with a finalized single-symbol icon that reads clearly at small sizes and is consistent across all app-facing surfaces. The new icon should use one bold flashcard mark, no text, no emoji glyphs, no placeholder feel, and a polished kid-friendly palette that matches the app’s current teal/yellow visual direction.
+
+### Prompt 033
+
+added another category "Shape", include most common shapes only.
