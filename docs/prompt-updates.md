@@ -168,3 +168,14 @@ added another category "Shape", include most common shapes only.
 ### Prompt 034
 
 added another category "part of body"
+
+### Prompt 035
+
+parts of body, should not use createIllustrationCard. should use always emoji when available
+
+## 2026-04-09
+
+### Prompt 036
+
+PLEASE IMPLEMENT THIS PLAN:
+## One Repo, Long-Lived `free` Branch, Separate App Store Listing

@@ -1,8 +1,9 @@
 import type { CapacitorConfig } from "@capacitor/cli";
+import { appConfig } from "./src/lib/appConfig";
 
 const config: CapacitorConfig = {
-  appId: "com.rattanakchea.kidgames",
-  appName: "Emoji Flashcard",
+  appId: appConfig.appId,
+  appName: appConfig.appName,
   webDir: "dist",
   ios: {
     contentInset: "always",

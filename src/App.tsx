@@ -692,7 +692,7 @@ export default function App() {
       <header className="topbar">
         <div className="topbar-row">
           <p className="topbar-summary">
-            <strong>Emoji Flashcards</strong> - Quick vocabulary practice
+            <strong>{appConfig.appName}</strong> - Quick vocabulary practice
           </p>
         </div>
 

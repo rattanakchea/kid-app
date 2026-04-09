@@ -8,6 +8,8 @@ This document captures the current release posture for the first iOS launch of E
 - Keep `premiumUiEnabled` disabled in the product UI.
 - Keep StoreKit plumbing in place for a later release.
 - Focus engineering time on native stability, App Review safety, and early tester feedback.
+- Treat `main` as the fuller release line.
+- Keep `free` as a curated downstream branch with its own release checklist and App Store record.
 
 ## Engineering Gates
 
@@ -33,6 +35,8 @@ This document captures the current release posture for the first iOS launch of E
 6. Launch once with network disabled and confirm bundled assets still load.
 7. Create one archive build in Xcode.
 8. Upload one build to App Store Connect or TestFlight.
+
+For `free`, repeat the same validation on the `free` branch after syncing its separate app identity and starter-only catalog.
 
 ## First-Session QA
 
@@ -62,6 +66,7 @@ This document captures the current release posture for the first iOS launch of E
 - privacy policy URL
 - support URL
 - support email
+- separate metadata set for the `free` branch listing
 
 ## TestFlight Goal
 

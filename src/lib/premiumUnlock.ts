@@ -1,11 +1,12 @@
 import { Capacitor, registerPlugin } from "@capacitor/core";
+import { appConfig } from "./appConfig";
 
 const premiumUnlockPlugin = registerPlugin<PremiumUnlockPlugin>("PremiumUnlock", {
   web: () =>
     import("./premiumUnlock.web").then(({ PremiumUnlockWeb }) => new PremiumUnlockWeb()),
 });
 
-export const premiumProductId = "com.rattanakchea.kidgames.premiumunlock";
+export const premiumProductId = `${appConfig.appId}.premiumunlock`;
 
 export type PremiumProduct = {
   id: string;

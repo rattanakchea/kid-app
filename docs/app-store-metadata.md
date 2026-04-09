@@ -2,7 +2,7 @@
 
 ## App
 
-- Name: Kid Games
+- Name: Emoji Learning Flashcard Game
 - Subtitle: Flashcards and Pair Games
 - Bundle ID: `com.rattanakchea.kidgames`
 - SKU: `kid-games-ios`
@@ -38,6 +38,11 @@ kids,flashcards,matching,preschool,toddler,learning,colors,animals,fruits
 - StoreKit groundwork exists in the codebase for a future one-time unlock, but no purchase or restore UI is exposed in this release.
 - No third-party ads are included.
 - No third-party analytics SDKs are included in the first iOS release.
+
+## Branch Note
+
+- This metadata file describes the `main` branch App Store listing.
+- The `free` branch owns its own bundle ID, screenshots, and App Store copy.
 
 ## URLs
 

@@ -56,7 +56,7 @@ describe("App", () => {
   it("shows parts of body as a normal playable pack", () => {
     render(<App />);
 
-    expect(screen.getByText("Emoji Flashcards")).toBeInTheDocument();
+    expect(screen.getByText(appConfig.appName)).toBeInTheDocument();
     expect(screen.getByText("Parts of Body")).toBeInTheDocument();
     expect(screen.getByText("Shapes")).toBeInTheDocument();
   });

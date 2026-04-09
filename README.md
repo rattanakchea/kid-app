@@ -11,7 +11,7 @@ Production-minded build for a kid-friendly educational web app, developed in sma
 
 ## Current Status
 
-The repository baseline and MVP product definition are set up, the app includes flashcards and pair matching across several content packs, the iOS Capacitor shell is present, and dormant one-time purchase plumbing exists without being exposed in the product UI.
+The repository baseline and MVP product definition are set up, the app includes flashcards and pair matching across several content packs, the iOS Capacitor shell is present, and the repo now follows a branch-based release model: `main` is the fuller product line and `free` is a slower-moving starter-edition branch with its own App Store identity.
 
 ## Product Direction
 
@@ -20,6 +20,8 @@ The repository baseline and MVP product definition are set up, the app includes 
 - The current launch packs are first words, animals, fruits, parts of body, shapes, and colors.
 - `First Words` is flashcards-only for now and uses bundled in-app image cards instead of external URLs.
 - One-time purchase support is being prepared for iOS, but premium UI remains disabled for the first release.
+- `main` is the primary release line for the fuller catalog.
+- `free` is a separate long-lived branch with a simpler starter catalog and its own App Store listing.
 
 ## Working Approach
 
@@ -45,6 +47,22 @@ The repository baseline and MVP product definition are set up, the app includes 
 - Capacitor iOS shell
 
 This keeps the product simple, offline-friendly on iOS, and free of backend dependencies for the first release.
+
+## Branch Release Model
+
+The repo now uses one codebase with two release branches:
+
+- `main`: primary product, updated regularly
+- `free`: intentionally simpler public app, updated selectively from `main`
+
+Operational rules:
+
+- Build new features on `main`
+- Update `free` only through cherry-picks or occasional controlled merges
+- Keep branch differences concentrated in low-conflict files such as app identity, pack catalog, and App Store metadata
+- Treat `free` as a curated downstream branch, not a mirror of `main`
+
+See `docs/free-branch-release.md` for the exact workflow.
 
 ## Deployment
 
@@ -99,6 +117,7 @@ Use `deploy:preview` for an ad hoc preview deployment. Use `deploy:prod` only wh
 - Validate the iOS shell on simulator, real device, offline launch, and one archive build.
 - Replace placeholder support/privacy details with production URLs and contact information before submission.
 - Keep monetization UI hidden until post-launch feedback justifies activating it.
+- Preserve the branch split: `main` carries the fuller product, while `free` stays intentionally simpler unless explicitly updated.
 
 ## Xcode
 
