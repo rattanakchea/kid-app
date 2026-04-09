@@ -164,3 +164,7 @@ Replace the current text-heavy, draft-looking icon with a finalized single-symbo
 ### Prompt 033
 
 added another category "Shape", include most common shapes only.
+
+### Prompt 034
+
+added another category "part of body"

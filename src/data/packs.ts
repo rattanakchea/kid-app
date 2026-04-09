@@ -23,16 +23,18 @@ function svgDataUrl(svg: string) {
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
-function createShapeCard({
+function createIllustrationCard({
   id,
   name,
   color,
   markup,
+  emoji,
 }: {
   id: string;
   name: string;
   color: string;
   markup: string;
+  emoji: string;
 }): Card {
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="${name}">
@@ -47,75 +49,98 @@ function createShapeCard({
   return {
     id,
     name,
-    emoji: "🔷",
+    emoji,
     imageUrl: svgDataUrl(svg),
   };
 }
 
 const shapeCards: Card[] = [
-  createShapeCard({
+  createIllustrationCard({
     id: "circle",
     name: "Circle",
     color: "#ef4444",
+    emoji: "🔴",
     markup: '<circle cx="120" cy="120" r="56" />',
   }),
-  createShapeCard({
+  createIllustrationCard({
     id: "square",
     name: "Square",
     color: "#3b82f6",
+    emoji: "🟦",
     markup: '<rect x="64" y="64" width="112" height="112" rx="12" />',
   }),
-  createShapeCard({
+  createIllustrationCard({
     id: "triangle",
     name: "Triangle",
     color: "#22c55e",
+    emoji: "🔺",
     markup: '<polygon points="120,54 184,174 56,174" />',
   }),
-  createShapeCard({
+  createIllustrationCard({
     id: "rectangle",
     name: "Rectangle",
     color: "#f97316",
+    emoji: "▭",
     markup: '<rect x="48" y="78" width="144" height="84" rx="12" />',
   }),
-  createShapeCard({
+  createIllustrationCard({
     id: "oval",
     name: "Oval",
     color: "#a855f7",
+    emoji: "🟣",
     markup: '<ellipse cx="120" cy="120" rx="70" ry="48" />',
   }),
-  createShapeCard({
+  createIllustrationCard({
     id: "star",
     name: "Star",
     color: "#facc15",
+    emoji: "⭐",
     markup:
       '<polygon points="120,46 140,92 190,96 152,128 164,178 120,150 76,178 88,128 50,96 100,92" />',
   }),
-  createShapeCard({
+  createIllustrationCard({
     id: "heart",
     name: "Heart",
     color: "#ec4899",
+    emoji: "💗",
     markup:
       '<path d="M120 184 C54 142 44 100 44 78 C44 52 64 36 88 36 C104 36 116 44 120 56 C124 44 136 36 152 36 C176 36 196 52 196 78 C196 100 186 142 120 184 Z" />',
   }),
-  createShapeCard({
+  createIllustrationCard({
     id: "diamond",
     name: "Diamond",
     color: "#14b8a6",
+    emoji: "🔷",
     markup: '<polygon points="120,42 186,120 120,198 54,120" />',
   }),
-  createShapeCard({
+  createIllustrationCard({
     id: "hexagon",
     name: "Hexagon",
     color: "#8b5cf6",
+    emoji: "⬡",
     markup: '<polygon points="84,54 156,54 192,120 156,186 84,186 48,120" />',
   }),
-  createShapeCard({
+  createIllustrationCard({
     id: "crescent",
     name: "Crescent",
     color: "#0ea5e9",
+    emoji: "🌙",
     markup:
       '<path d="M144 50 C104 50 72 82 72 122 C72 162 104 194 144 194 C117 182 98 154 98 122 C98 90 117 62 144 50 Z" />',
   }),
+];
+
+const bodyPartCards: Card[] = [
+  { id: "head", name: "Head", emoji: "🙂" },
+  { id: "eyes", name: "Eyes", emoji: "👀" },
+  { id: "ears", name: "Ears", emoji: "👂" },
+  { id: "nose", name: "Nose", emoji: "👃" },
+  { id: "mouth", name: "Mouth", emoji: "👄" },
+  { id: "hands", name: "Hands", emoji: "👐" },
+  { id: "arms", name: "Arms", emoji: "💪" },
+  { id: "legs", name: "Legs", emoji: "🦵" },
+  { id: "feet", name: "Feet", emoji: "🦶" },
+  { id: "hair", name: "Hair", emoji: "💇" },
 ];
 
 export const packs: Pack[] = [
@@ -223,6 +248,12 @@ export const packs: Pack[] = [
       { id: "tomato", name: "Tomato", emoji: "🍅" },
       { id: "green-apple", name: "Green Apple", emoji: "🍏" },
     ],
+  },
+  {
+    id: "parts-of-body",
+    title: "Parts of Body",
+    description: "Learn common body parts with clear, friendly picture cards.",
+    cards: bodyPartCards,
   },
   {
     id: "colors",

@@ -295,6 +295,10 @@ a {
   background: linear-gradient(180deg, #d7f2de 0%, #ffe2b6 100%);
 }
 
+.tint-parts-of-body {
+  background: linear-gradient(180deg, #ffe6dc 0%, #fff2c8 100%);
+}
+
 .tint-shapes {
   background: linear-gradient(180deg, #dff5ff 0%, #fff0be 100%);
 }

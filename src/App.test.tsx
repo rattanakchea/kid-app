@@ -53,11 +53,11 @@ describe("App", () => {
     cleanup();
   });
 
-  it("shows shapes as a normal playable pack", () => {
+  it("shows parts of body as a normal playable pack", () => {
     render(<App />);
 
     expect(screen.getByText("Emoji Flashcards")).toBeInTheDocument();
-    expect(screen.getByText("Colors")).toBeInTheDocument();
+    expect(screen.getByText("Parts of Body")).toBeInTheDocument();
     expect(screen.getByText("Shapes")).toBeInTheDocument();
   });
 
@@ -75,17 +75,21 @@ describe("App", () => {
     expect(screen.queryByText(/unlock premium/i)).not.toBeInTheDocument();
   });
 
-  it("shows shapes in pair games and opens the matching board", async () => {
+  it("shows parts of body in pair games and opens the matching board", async () => {
     render(<App />);
 
     fireEvent.click(screen.getByRole("button", { name: "Pair Games" }));
-    fireEvent.click(screen.getAllByRole("button", { name: "Shapes pack" })[0]);
+    fireEvent.click(
+      screen.getAllByRole("button", { name: "Parts of Body pack" })[0],
+    );
 
     expect(
-      await screen.findByRole("heading", { level: 1, name: /shapes pair game/i }),
+      await screen.findByRole("heading", { level: 1, name: /parts of body pair game/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText((_, element) => element?.textContent === "Shapes matching board"),
+      screen.getByText(
+        (_, element) => element?.textContent === "Parts of Body matching board",
+      ),
     ).toBeInTheDocument();
   });
 

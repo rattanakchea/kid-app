@@ -17,7 +17,7 @@ The repository baseline and MVP product definition are set up, the app includes 
 
 - The first product is a simple educational app for young kids, shipped on the web and prepared for an iOS release.
 - The initial learning modes are flashcards and pair matching.
-- The current launch packs are first words, animals, fruits, shapes, and colors.
+- The current launch packs are first words, animals, fruits, parts of body, shapes, and colors.
 - `First Words` is flashcards-only for now and uses bundled in-app image cards instead of external URLs.
 - One-time purchase support is being prepared for iOS, but premium UI remains disabled for the first release.
 
