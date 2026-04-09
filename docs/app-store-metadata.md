@@ -2,10 +2,10 @@
 
 ## App
 
-- Name: Emoji Learning Flashcard Game
+- Name: Emoji Learning Flashcard Game Free
 - Subtitle: Flashcards and Pair Games
-- Bundle ID: `com.rattanakchea.kidgames`
-- SKU: `kid-games-ios`
+- Bundle ID: `com.rattanakchea.kidgames.free`
+- SKU: `kid-games-ios-free`
 - Primary category: Education
 - Kids Category: Ages 5 and under
 
@@ -19,7 +19,7 @@ Current activities include:
 
 - Flashcards with tap-to-hear pronunciation
 - Pair matching for early vocabulary practice
-- Color, animal, fruit, and first-word learning packs
+- Animal, fruit, and first-word learning packs
 
 We plan to update the app regularly with new learning content and improvements. Please share your feedback in the App Store comments to help shape future updates.
 
@@ -35,14 +35,8 @@ kids,flashcards,matching,preschool,toddler,learning,colors,animals,fruits
 
 - The app uses bundled web assets inside a Capacitor iOS shell.
 - All visible content in the first iOS release is playable without purchase.
-- StoreKit groundwork exists in the codebase for a future one-time unlock, but no purchase or restore UI is exposed in this release.
 - No third-party ads are included.
 - No third-party analytics SDKs are included in the first iOS release.
-
-## Branch Note
-
-- This metadata file describes the `main` branch App Store listing.
-- The `free` branch owns its own bundle ID, screenshots, and App Store copy.
 
 ## URLs
 

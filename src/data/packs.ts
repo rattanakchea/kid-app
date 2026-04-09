@@ -249,58 +249,6 @@ export const packs: Pack[] = [
       { id: "green-apple", name: "Green Apple", emoji: "🍏" },
     ],
   },
-  {
-    id: "parts-of-body",
-    title: "Parts of Body",
-    description: "Learn common body parts with clear, friendly picture cards.",
-    cards: bodyPartCards,
-  },
-  {
-    id: "colors",
-    title: "Colors",
-    description:
-      "Learn common color names with bold swatches and simple repetition.",
-    requiresPremium: true,
-    cards: [
-      { id: "red", name: "Red", emoji: "🔴", swatch: { fill: "#ef4444" } },
-      { id: "blue", name: "Blue", emoji: "🔵", swatch: { fill: "#3b82f6" } },
-      {
-        id: "yellow",
-        name: "Yellow",
-        emoji: "🟡",
-        swatch: { fill: "#facc15" },
-      },
-      { id: "green", name: "Green", emoji: "🟢", swatch: { fill: "#22c55e" } },
-      {
-        id: "orange",
-        name: "Orange",
-        emoji: "🟠",
-        swatch: { fill: "#f97316" },
-      },
-      {
-        id: "purple",
-        name: "Purple",
-        emoji: "🟣",
-        swatch: { fill: "#a855f7" },
-      },
-      { id: "pink", name: "Pink", emoji: "🩷", swatch: { fill: "#f472b6" } },
-      { id: "brown", name: "Brown", emoji: "🟤", swatch: { fill: "#92400e" } },
-      { id: "black", name: "Black", emoji: "⚫", swatch: { fill: "#111827" } },
-      {
-        id: "white",
-        name: "White",
-        emoji: "⚪",
-        swatch: { fill: "#ffffff", stroke: "#cbd5e1" },
-      },
-      { id: "gray", name: "Gray", emoji: "⚪", swatch: { fill: "#9ca3af" } },
-    ],
-  },
-  {
-    id: "shapes",
-    title: "Shapes",
-    description: "Practice common shapes with clear, colorful learning cards.",
-    cards: shapeCards,
-  },
   // {
   //   id: "farm-animals",
   //   title: "Farm Animals",

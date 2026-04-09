@@ -57,38 +57,36 @@ describe("App", () => {
     render(<App />);
 
     expect(screen.getByText(appConfig.appName)).toBeInTheDocument();
-    expect(screen.getByText("Parts of Body")).toBeInTheDocument();
-    expect(screen.getByText("Shapes")).toBeInTheDocument();
+    expect(screen.getByText("First Words")).toBeInTheDocument();
+    expect(screen.getByText("Animals")).toBeInTheDocument();
+    expect(screen.getByText("Fruits")).toBeInTheDocument();
+    expect(screen.queryByText("Parts of Body")).not.toBeInTheDocument();
+    expect(screen.queryByText("Shapes")).not.toBeInTheDocument();
   });
 
-  it("opens colors directly without premium UI", async () => {
+  it("does not show the fuller-catalog packs in the free branch", () => {
     render(<App />);
 
-    fireEvent.click(screen.getAllByRole("button", { name: "Colors pack" })[0]);
-
     expect(
-      await screen.findByRole("heading", { level: 1, name: /colors flashcards/i }),
-    ).toBeInTheDocument();
+      screen.queryByRole("button", { name: "Colors pack" }),
+    ).not.toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /flip flashcard for red/i }),
-    ).toBeInTheDocument();
-    expect(screen.queryByText(/unlock premium/i)).not.toBeInTheDocument();
+      screen.queryByRole("button", { name: "Shapes pack" }),
+    ).not.toBeInTheDocument();
   });
 
-  it("shows parts of body in pair games and opens the matching board", async () => {
+  it("shows animals in pair games and opens the matching board", async () => {
     render(<App />);
 
     fireEvent.click(screen.getByRole("button", { name: "Pair Games" }));
-    fireEvent.click(
-      screen.getAllByRole("button", { name: "Parts of Body pack" })[0],
-    );
+    fireEvent.click(screen.getAllByRole("button", { name: "Animals pack" })[0]);
 
     expect(
-      await screen.findByRole("heading", { level: 1, name: /parts of body pair game/i }),
+      await screen.findByRole("heading", { level: 1, name: /animals pair game/i }),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        (_, element) => element?.textContent === "Parts of Body matching board",
+        (_, element) => element?.textContent === "Animals matching board",
       ),
     ).toBeInTheDocument();
   });
@@ -106,15 +104,15 @@ describe("App", () => {
 
     render(<App />);
 
-    fireEvent.click(screen.getAllByRole("button", { name: "Colors pack" })[0]);
+    fireEvent.click(screen.getAllByRole("button", { name: "Animals pack" })[0]);
 
     const flipButton = await screen.findByRole("button", {
-      name: /flip flashcard for red/i,
+      name: /flip flashcard for lion/i,
     });
 
     fireEvent.click(flipButton);
 
-    const hearButton = screen.getByRole("button", { name: /hear red/i });
+    const hearButton = screen.getByRole("button", { name: /hear lion/i });
     expect(hearButton).toBeEnabled();
 
     fireEvent.click(hearButton);
@@ -125,6 +123,7 @@ describe("App", () => {
 
   it("keeps premium config disabled while purchase plumbing remains configured", () => {
     expect(appConfig.premiumUiEnabled).toBe(false);
+    expect(appConfig.appId).toBe("com.rattanakchea.kidgames.free");
     expect(appConfig.premiumDisplayPrice).toBe(String.fromCharCode(36) + "2.99");
   });
 });

@@ -1,15 +1,14 @@
 # Release Hardening Checklist
 
-This document captures the current release posture for the first iOS launch of Emoji Learning Flashcard Game for Kids.
+This document captures the current release posture for the `free` branch of Emoji Learning Flashcard Game.
 
 ## Launch Position
 
 - Ship a simple educational app first.
 - Keep `premiumUiEnabled` disabled in the product UI.
-- Keep StoreKit plumbing in place for a later release.
+- Keep the free branch limited to the starter catalog.
 - Focus engineering time on native stability, App Review safety, and early tester feedback.
-- Treat `main` as the fuller release line.
-- Keep `free` as a curated downstream branch with its own release checklist and App Store record.
+- Treat this branch as a curated downstream release line from `main`.
 
 ## Engineering Gates
 
@@ -36,7 +35,7 @@ This document captures the current release posture for the first iOS launch of E
 7. Create one archive build in Xcode.
 8. Upload one build to App Store Connect or TestFlight.
 
-For `free`, repeat the same validation on the `free` branch after syncing its separate app identity and starter-only catalog.
+This branch should always validate against its own app identity and starter-only catalog.
 
 ## First-Session QA
 
@@ -44,8 +43,8 @@ For `free`, repeat the same validation on the `free` branch after syncing its se
 - Flashcards flip reliably on tap.
 - Flashcard audio works when supported and fails gracefully when unavailable.
 - Pair matching remains centered and touch-friendly.
-- Colors swatches remain visible, including light colors.
 - No purchase, restore, or parent-gate UI is visible in the shipped flow.
+- Only starter packs appear in the home screen and detail flows.
 
 ## App Review / Kids Category Checks
 
@@ -66,7 +65,6 @@ For `free`, repeat the same validation on the `free` branch after syncing its se
 - privacy policy URL
 - support URL
 - support email
-- separate metadata set for the `free` branch listing
 
 ## TestFlight Goal
 
