@@ -705,7 +705,9 @@ export default function App() {
                       {gameMode === "flashcards" ? "Flashcards" : "Pair Games"}
                     </p>
                     {packState.promoOnly ? (
-                      <span className="home-card-badge">Locked</span>
+                      <span className="home-card-badge" aria-label="Locked pack">
+                        🔒
+                      </span>
                     ) : null}
                   </div>
                   <h3>{pack.title}</h3>
