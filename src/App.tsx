@@ -158,17 +158,13 @@ export default function App() {
 
   const playablePacks = useMemo(
     () =>
-      packStates
-        .filter(({ state }) => state.playable)
-        .map(({ pack }) => pack),
+      packStates.filter(({ state }) => state.playable).map(({ pack }) => pack),
     [packStates],
   );
 
   const lockedPromoPacks = useMemo(
     () =>
-      packStates
-        .filter(({ state }) => state.promoOnly)
-        .map(({ pack }) => pack),
+      packStates.filter(({ state }) => state.promoOnly).map(({ pack }) => pack),
     [packStates],
   );
 
@@ -318,7 +314,11 @@ export default function App() {
       return;
     }
 
-    window.open(appConfig.fullVersionAppStoreUrl, "_blank", "noopener,noreferrer");
+    window.open(
+      appConfig.fullVersionAppStoreUrl,
+      "_blank",
+      "noopener,noreferrer",
+    );
     handleClosePromoModal();
   };
 
@@ -677,12 +677,11 @@ export default function App() {
         <div className="home-card-grid">
           {[...playablePacks, ...lockedPromoPacks].map((pack) => {
             const packState = buildPackState(pack, hasPremiumAccess);
-            const footerLabel =
-              packState.promoOnly
-                ? "FULL VERSION"
-                : gameMode === "flashcards"
-                  ? "FLASH CARDS"
-                  : "PAIR GAMES";
+            const footerLabel = packState.promoOnly
+              ? "FULL VERSION"
+              : gameMode === "flashcards"
+                ? "FLASH CARDS"
+                : "PAIR GAMES";
             const previewCards =
               pack.cards.length > 0
                 ? [
@@ -760,7 +759,7 @@ export default function App() {
       <header className="topbar">
         <div className="topbar-row">
           <p className="topbar-summary">
-            <strong>{appConfig.appName}</strong> - Quick vocabulary practice
+            <strong>{appConfig.appName}</strong>
           </p>
         </div>
 
@@ -833,8 +832,9 @@ export default function App() {
                 <p className="premium-kicker">Parents Only</p>
                 <h2 id="locked-pack-title">Open the full version</h2>
                 <p>
-                  To continue, type <strong>{appConfig.parentGateAnswer}</strong>{" "}
-                  below and then open the App Store page.
+                  To continue, type{" "}
+                  <strong>{appConfig.parentGateAnswer}</strong> below and then
+                  open the App Store page.
                 </p>
                 <input
                   className="gate-input"

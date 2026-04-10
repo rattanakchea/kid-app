@@ -1,5 +1,5 @@
 export const appConfig = {
-  appName: "Emoji Learning Flashcard Game Free",
+  appName: "Free Emoji Learning Flashcard",
   appId: "com.rattanakchea.kidgames.free",
   premiumUiEnabled: false,
   premiumDisplayPrice: "$2.99",
