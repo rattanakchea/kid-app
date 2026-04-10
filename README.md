@@ -18,6 +18,7 @@ This branch is the slower-moving `free` release line. It keeps the starter editi
 - The first product is a simple educational app for young kids, shipped on the web and prepared for an iOS release.
 - The initial learning modes are flashcards and pair matching.
 - The starter catalog on this branch is first words, animals, and fruits.
+- The fuller categories appear as locked placeholders that point families to the full-version listing.
 - `First Words` is flashcards-only for now and uses bundled in-app image cards instead of external URLs.
 - Premium UI is disabled on this branch.
 - This branch ships under its own App Store listing and bundle ID.
@@ -111,6 +112,7 @@ Use `deploy:preview` for an ad hoc preview deployment. Use `deploy:prod` only wh
 - Replace placeholder support/privacy details with production URLs and contact information before submission.
 - Keep monetization UI hidden in the free branch.
 - Preserve the starter-only pack list unless a deliberate free-branch product update is made.
+- Keep the outbound full-version link behind the parent-gate flow.
 
 ## Xcode
 

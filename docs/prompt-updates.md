@@ -179,3 +179,7 @@ parts of body, should not use createIllustrationCard. should use always emoji wh
 
 PLEASE IMPLEMENT THIS PLAN:
 ## One Repo, Long-Lived `free` Branch, Separate App Store Listing
+
+### Prompt 037
+
+In the free version, create placeholders for the locked categories. When users click on them, open a pop up with a link to download the full version.

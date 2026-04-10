@@ -45,6 +45,7 @@ This branch should always validate against its own app identity and starter-only
 - Pair matching remains centered and touch-friendly.
 - No purchase, restore, or parent-gate UI is visible in the shipped flow.
 - Only starter packs appear in the home screen and detail flows.
+- Locked placeholder packs may appear, but any outbound full-version link must stay behind the parent gate.
 
 ## App Review / Kids Category Checks
 

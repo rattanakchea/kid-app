@@ -816,6 +816,7 @@ a {
 .gate-overlay {
   position: fixed;
   inset: 0;
+  z-index: 2000;
   display: grid;
   place-items: center;
   padding: 20px;
@@ -823,6 +824,8 @@ a {
 }
 
 .gate-modal {
+  position: relative;
+  z-index: 2001;
   width: min(100%, 420px);
   display: grid;
   gap: 14px;

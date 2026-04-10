@@ -47,32 +47,81 @@ describe("App", () => {
         speak: vi.fn(),
       },
     });
+
+    Object.defineProperty(window, "open", {
+      configurable: true,
+      value: vi.fn(),
+    });
   });
 
   afterEach(() => {
     cleanup();
   });
 
-  it("shows parts of body as a normal playable pack", () => {
+  it("shows starter packs first and keeps fuller packs locked", () => {
     render(<App />);
 
     expect(screen.getByText(appConfig.appName)).toBeInTheDocument();
     expect(screen.getByText("First Words")).toBeInTheDocument();
     expect(screen.getByText("Animals")).toBeInTheDocument();
     expect(screen.getByText("Fruits")).toBeInTheDocument();
-    expect(screen.queryByText("Parts of Body")).not.toBeInTheDocument();
-    expect(screen.queryByText("Shapes")).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Parts of Body pack, locked" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Shapes pack, locked" }),
+    ).toBeInTheDocument();
   });
 
-  it("does not show the fuller-catalog packs in the free branch", () => {
+  it("shows locked placeholders for the fuller catalog", () => {
     render(<App />);
 
     expect(
-      screen.queryByRole("button", { name: "Colors pack" }),
-    ).not.toBeInTheDocument();
+      screen.getByRole("button", { name: "Colors pack, locked" }),
+    ).toBeInTheDocument();
     expect(
-      screen.queryByRole("button", { name: "Shapes pack" }),
-    ).not.toBeInTheDocument();
+      screen.getByRole("button", { name: "Shapes pack, locked" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Parts of Body pack, locked" }),
+    ).toBeInTheDocument();
+  });
+
+  it("opens the full-version promo popup for locked packs", () => {
+    render(<App />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Colors pack, locked" }));
+
+    expect(
+      screen.getByRole("heading", { level: 2, name: /colors is locked/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/full version of the app/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Ask a parent" })).toBeInTheDocument();
+  });
+
+  it("parent gate opens the paid app store link only after confirmation", () => {
+    const openSpy = vi.mocked(window.open);
+
+    render(<App />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Shapes pack, locked" }));
+    fireEvent.click(screen.getByRole("button", { name: "Ask a parent" }));
+
+    fireEvent.click(screen.getByRole("button", { name: "Open full version" }));
+
+    expect(screen.getByText(/please ask a parent/i)).toBeInTheDocument();
+    expect(openSpy).not.toHaveBeenCalled();
+
+    fireEvent.change(screen.getByRole("textbox", { name: "Parent confirmation word" }), {
+      target: { value: appConfig.parentGateAnswer },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Open full version" }));
+
+    expect(openSpy).toHaveBeenCalledWith(
+      appConfig.fullVersionAppStoreUrl,
+      "_blank",
+      "noopener,noreferrer",
+    );
   });
 
   it("shows animals in pair games and opens the matching board", async () => {

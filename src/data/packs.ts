@@ -14,6 +14,7 @@ export type Pack = {
   title: string;
   description: string;
   locked?: boolean;
+  promoOnly?: boolean;
   requiresPremium?: boolean;
   modes?: ("flashcards" | "match")[];
   cards: Card[];
@@ -143,6 +144,17 @@ const bodyPartCards: Card[] = [
   { id: "hair", name: "Hair", emoji: "💇" },
 ];
 
+const colorCards: Card[] = [
+  { id: "red", name: "Red", emoji: "🔴", swatch: { fill: "#ef4444" } },
+  { id: "blue", name: "Blue", emoji: "🔵", swatch: { fill: "#3b82f6" } },
+  {
+    id: "yellow",
+    name: "Yellow",
+    emoji: "🟡",
+    swatch: { fill: "#facc15" },
+  },
+];
+
 export const packs: Pack[] = [
   {
     id: "first-words",
@@ -249,11 +261,25 @@ export const packs: Pack[] = [
       { id: "green-apple", name: "Green Apple", emoji: "🍏" },
     ],
   },
-  // {
-  //   id: "farm-animals",
-  //   title: "Farm Animals",
-  //   description: "Premium pack coming soon with a farm animal vocabulary set.",
-  //   requiresPremium: true,
-  //   cards: [],
-  // },
+  {
+    id: "colors",
+    title: "Colors",
+    description: "Available in the full version with more bright vocabulary play.",
+    promoOnly: true,
+    cards: colorCards,
+  },
+  {
+    id: "shapes",
+    title: "Shapes",
+    description: "Unlock common shapes in the full version.",
+    promoOnly: true,
+    cards: shapeCards,
+  },
+  {
+    id: "parts-of-body",
+    title: "Parts of Body",
+    description: "Learn body-part words in the full version.",
+    promoOnly: true,
+    cards: bodyPartCards,
+  },
 ];
