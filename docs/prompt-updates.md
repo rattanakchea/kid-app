@@ -183,3 +183,13 @@ PLEASE IMPLEMENT THIS PLAN:
 ### Prompt 037
 
 In the free version, create placeholders for the locked categories. When users click on them, open a pop up with a link to download the full version.
+
+## 2026-04-11
+
+### Prompt 038
+
+can you get them for me
+
+### Prompt 039
+
+I enabled this. Driving the simulator directly is blocked by macOS accessibility settings. I’m switching to a more reliable path: a small screenshot-state hook in the app so I can build exact scenes and capture them cleanly in the native simulator without manual tapping. please proceed to get 4 screenshots.

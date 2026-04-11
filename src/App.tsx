@@ -11,6 +11,11 @@ const matchTileCount = 6;
 
 type GameMode = "flashcards" | "match";
 type PageView = "home" | "detail";
+type ScreenshotScene =
+  | "home"
+  | "animals-flashcards"
+  | "animals-match"
+  | "locked-colors";
 
 type MatchTile = {
   id: string;
@@ -23,6 +28,20 @@ const sections: { id: GameMode; label: string }[] = [
   { id: "flashcards", label: "Flashcards" },
   { id: "match", label: "Pair Games" },
 ];
+
+function readScreenshotScene(): ScreenshotScene | null {
+  const rawScene = import.meta.env.VITE_SCREENSHOT_SCENE;
+
+  switch (rawScene) {
+    case "home":
+    case "animals-flashcards":
+    case "animals-match":
+    case "locked-colors":
+      return rawScene;
+    default:
+      return null;
+  }
+}
 
 function shuffleTiles<T>(items: T[]) {
   const nextItems = [...items];
@@ -119,6 +138,7 @@ function buildPackState(pack: Pack, hasPremiumAccess: boolean) {
 }
 
 export default function App() {
+  const screenshotScene = readScreenshotScene();
   const [selectedPackId, setSelectedPackId] = useState("animals");
   const [gameMode, setGameMode] = useState<GameMode>("flashcards");
   const [pageView, setPageView] = useState<PageView>("home");
@@ -137,6 +157,7 @@ export default function App() {
   const touchStartYRef = useRef<number | null>(null);
   const suppressFlashcardTapRef = useRef(false);
   const flipBackTimeoutRef = useRef<number | null>(null);
+  const screenshotSceneAppliedRef = useRef(false);
 
   const speechSynthesisSupported =
     typeof window !== "undefined" && "speechSynthesis" in window;
@@ -174,6 +195,11 @@ export default function App() {
 
   const currentSection =
     sections.find((section) => section.id === gameMode) ?? sections[0];
+  const forcedPromoPack =
+    screenshotScene === "locked-colors"
+      ? packs.find((pack) => pack.id === "colors") ?? null
+      : null;
+  const activePromoPack = promoPack ?? forcedPromoPack;
 
   const currentCard = selectedPack?.cards[currentCardIndex];
   const canGoBack = currentCardIndex > 0;
@@ -236,6 +262,51 @@ export default function App() {
       window.speechSynthesis.cancel();
     };
   }, [currentCard, gameMode, pageView, speechSynthesisSupported]);
+
+  useEffect(() => {
+    if (screenshotSceneAppliedRef.current || !screenshotScene) {
+      return;
+    }
+
+    screenshotSceneAppliedRef.current = true;
+    clearPendingFlipBack();
+    setCurrentCardIndex(0);
+    setIsFlashcardFlipped(false);
+    setFlippedTileIds([]);
+    setMatchMoves(0);
+    setShowParentGate(false);
+    setParentGateValue("");
+    setParentGateError("");
+
+    if (screenshotScene === "home") {
+      setGameMode("flashcards");
+      setPageView("home");
+      setPromoPack(null);
+      return;
+    }
+
+    if (screenshotScene === "animals-flashcards") {
+      setSelectedPackId("animals");
+      setGameMode("flashcards");
+      setPageView("detail");
+      setPromoPack(null);
+      return;
+    }
+
+    if (screenshotScene === "animals-match") {
+      setSelectedPackId("animals");
+      setGameMode("match");
+      setPageView("detail");
+      setPromoPack(null);
+      return;
+    }
+
+    if (screenshotScene === "locked-colors") {
+      setGameMode("flashcards");
+      setPageView("home");
+      setPromoPack(packs.find((pack) => pack.id === "colors") ?? null);
+    }
+  }, [screenshotScene]);
 
   const clearPendingFlipBack = () => {
     if (flipBackTimeoutRef.current !== null) {
@@ -800,7 +871,7 @@ export default function App() {
         </main>
       )}
 
-      {promoPack ? (
+      {activePromoPack ? (
         <div className="gate-overlay" role="presentation">
           <section
             className="gate-modal"
@@ -811,9 +882,9 @@ export default function App() {
             {!showParentGate ? (
               <>
                 <p className="premium-kicker">Full Version</p>
-                <h2 id="locked-pack-title">{promoPack.title} is locked</h2>
+                <h2 id="locked-pack-title">{activePromoPack.title} is locked</h2>
                 <p>
-                  {promoPack.title} is available in the full version of the app.
+                  {activePromoPack.title} is available in the full version of the app.
                   This free edition includes starter packs only.
                 </p>
                 <p>
