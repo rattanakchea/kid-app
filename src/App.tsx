@@ -11,11 +11,6 @@ const matchTileCount = 6;
 
 type GameMode = "flashcards" | "match";
 type PageView = "home" | "detail";
-type ScreenshotScene =
-  | "home"
-  | "animals-flashcards"
-  | "animals-match"
-  | "locked-colors";
 
 type MatchTile = {
   id: string;
@@ -28,20 +23,6 @@ const sections: { id: GameMode; label: string }[] = [
   { id: "flashcards", label: "Flashcards" },
   { id: "match", label: "Pair Games" },
 ];
-
-function readScreenshotScene(): ScreenshotScene | null {
-  const rawScene = import.meta.env.VITE_SCREENSHOT_SCENE;
-
-  switch (rawScene) {
-    case "home":
-    case "animals-flashcards":
-    case "animals-match":
-    case "locked-colors":
-      return rawScene;
-    default:
-      return null;
-  }
-}
 
 function shuffleTiles<T>(items: T[]) {
   const nextItems = [...items];
@@ -137,7 +118,6 @@ function buildPackState(pack: Pack, hasPremiumAccess: boolean) {
 }
 
 export default function App() {
-  const screenshotScene = readScreenshotScene();
   const [selectedPackId, setSelectedPackId] = useState("animals");
   const [gameMode, setGameMode] = useState<GameMode>("flashcards");
   const [pageView, setPageView] = useState<PageView>("home");
@@ -152,7 +132,6 @@ export default function App() {
   const touchStartYRef = useRef<number | null>(null);
   const suppressFlashcardTapRef = useRef(false);
   const flipBackTimeoutRef = useRef<number | null>(null);
-  const screenshotSceneAppliedRef = useRef(false);
 
   const speechSynthesisSupported =
     typeof window !== "undefined" && "speechSynthesis" in window;
@@ -177,11 +156,6 @@ export default function App() {
 
   const currentSection =
     sections.find((section) => section.id === gameMode) ?? sections[0];
-  const forcedPromoPack =
-    screenshotScene === "locked-colors"
-      ? packs.find((pack) => pack.id === "colors") ?? null
-      : null;
-  const activePromoPack = promoPack ?? forcedPromoPack;
 
   const currentCard = selectedPack?.cards[currentCardIndex];
   const canGoBack = currentCardIndex > 0;
@@ -244,51 +218,6 @@ export default function App() {
       window.speechSynthesis.cancel();
     };
   }, [currentCard, gameMode, pageView, speechSynthesisSupported]);
-
-  useEffect(() => {
-    if (screenshotSceneAppliedRef.current || !screenshotScene) {
-      return;
-    }
-
-    screenshotSceneAppliedRef.current = true;
-    clearPendingFlipBack();
-    setCurrentCardIndex(0);
-    setIsFlashcardFlipped(false);
-    setFlippedTileIds([]);
-    setMatchMoves(0);
-    setShowParentGate(false);
-    setParentGateValue("");
-    setParentGateError("");
-
-    if (screenshotScene === "home") {
-      setGameMode("flashcards");
-      setPageView("home");
-      setPromoPack(null);
-      return;
-    }
-
-    if (screenshotScene === "animals-flashcards") {
-      setSelectedPackId("animals");
-      setGameMode("flashcards");
-      setPageView("detail");
-      setPromoPack(null);
-      return;
-    }
-
-    if (screenshotScene === "animals-match") {
-      setSelectedPackId("animals");
-      setGameMode("match");
-      setPageView("detail");
-      setPromoPack(null);
-      return;
-    }
-
-    if (screenshotScene === "locked-colors") {
-      setGameMode("flashcards");
-      setPageView("home");
-      setPromoPack(packs.find((pack) => pack.id === "colors") ?? null);
-    }
-  }, [screenshotScene]);
 
   const clearPendingFlipBack = () => {
     if (flipBackTimeoutRef.current !== null) {
@@ -801,73 +730,6 @@ export default function App() {
           </section>
         </main>
       )}
-
-      {activePromoPack ? (
-        <div className="gate-overlay" role="presentation">
-          <section
-            className="gate-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="locked-pack-title"
-          >
-            {!showParentGate ? (
-              <>
-                <p className="premium-kicker">Full Version</p>
-                <h2 id="locked-pack-title">{activePromoPack.title} is locked</h2>
-                <p>
-                  {activePromoPack.title} is available in the full version of the app.
-                  This free edition includes starter packs only.
-                </p>
-                <p>
-                  Ask a parent if you want to open the App Store page for the
-                  full version.
-                </p>
-                <div className="gate-actions">
-                  <button onClick={handleClosePromoModal} type="button">
-                    Not now
-                  </button>
-                  <button onClick={handleContinueToParentGate} type="button">
-                    Ask a parent
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <p className="premium-kicker">Parents Only</p>
-                <h2 id="locked-pack-title">Open the full version</h2>
-                <p>
-                  To continue, type{" "}
-                  <strong>{appConfig.parentGateAnswer}</strong> below and then
-                  open the App Store page.
-                </p>
-                <input
-                  className="gate-input"
-                  value={parentGateValue}
-                  onChange={(event) => {
-                    setParentGateValue(event.target.value);
-                    setParentGateError("");
-                  }}
-                  placeholder="Type the confirmation word"
-                  aria-label="Parent confirmation word"
-                />
-                {parentGateError ? (
-                  <p className="gate-error" aria-live="assertive">
-                    {parentGateError}
-                  </p>
-                ) : null}
-                <div className="gate-actions">
-                  <button onClick={handleClosePromoModal} type="button">
-                    Cancel
-                  </button>
-                  <button onClick={handleOpenFullVersion} type="button">
-                    Open full version
-                  </button>
-                </div>
-              </>
-            )}
-          </section>
-        </div>
-      ) : null}
     </div>
   );
 }
