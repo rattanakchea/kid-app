@@ -2,7 +2,7 @@
 
 ## App
 
-- Name: Emoji Learning Flashcard Game Free
+- Name: Emoji Flashcards Lite
 - Subtitle: Flashcards and Pair Games
 - Bundle ID: `com.rattanakchea.kidgames.free`
 - SKU: `kid-games-ios-free`
