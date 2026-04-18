@@ -14,7 +14,6 @@ export type Pack = {
   title: string;
   description: string;
   locked?: boolean;
-  promoOnly?: boolean;
   requiresPremium?: boolean;
   modes?: ("flashcards" | "match")[];
   cards: Card[];
@@ -264,22 +263,19 @@ export const packs: Pack[] = [
   {
     id: "colors",
     title: "Colors",
-    description: "Available in the full version with more bright vocabulary play.",
-    promoOnly: true,
+    description: "Name bright colors with simple, high-contrast flashcards.",
     cards: colorCards,
   },
   {
     id: "shapes",
     title: "Shapes",
-    description: "Unlock common shapes in the full version.",
-    promoOnly: true,
+    description: "Practice common shapes with simple visual examples.",
     cards: shapeCards,
   },
   {
     id: "parts-of-body",
     title: "Parts of Body",
-    description: "Learn body-part words in the full version.",
-    promoOnly: true,
+    description: "Learn familiar body-part words with simple picture cues.",
     cards: bodyPartCards,
   },
 ];

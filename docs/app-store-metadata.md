@@ -2,7 +2,7 @@
 
 ## App
 
-- Name: Emoji Flashcards Lite
+- Name: Emoji Flashcards
 - Subtitle: Flashcards and Pair Games
 - Bundle ID: `com.rattanakchea.kidgames.free`
 - SKU: `kid-games-ios-free`
@@ -19,7 +19,7 @@ Current activities include:
 
 - Flashcards with tap-to-hear pronunciation
 - Pair matching for early vocabulary practice
-- Animal, fruit, and first-word learning packs
+- Animal, fruit, color, shape, body-part, and first-word learning packs
 
 We plan to update the app regularly with new learning content and improvements. Please share your feedback in the App Store comments to help shape future updates.
 
@@ -29,12 +29,13 @@ Simple, kid-friendly flashcards and matching games for short daily learning sess
 
 ## Keywords
 
-kids,flashcards,matching,preschool,toddler,learning,colors,animals,fruits
+kids,flashcards,matching,preschool,toddler,learning,animals,fruits,shapes
 
 ## Review Notes
 
 - The app uses bundled web assets inside a Capacitor iOS shell.
 - All visible content in the first iOS release is playable without purchase.
+- No external upgrade or full-version link is exposed in the app.
 - No third-party ads are included.
 - No third-party analytics SDKs are included in the first iOS release.
 
