@@ -11,11 +11,7 @@ const matchTileCount = 6;
 
 type GameMode = "flashcards" | "match";
 type PageView = "home" | "detail";
-type ScreenshotScene =
-  | "home"
-  | "animals-flashcards"
-  | "animals-match"
-  | "locked-colors";
+type ScreenshotScene = "home" | "animals-flashcards" | "animals-match";
 
 type MatchTile = {
   id: string;
@@ -36,7 +32,6 @@ function readScreenshotScene(): ScreenshotScene | null {
     case "home":
     case "animals-flashcards":
     case "animals-match":
-    case "locked-colors":
       return rawScene;
     default:
       return null;
@@ -129,12 +124,11 @@ function CardVisual({
 function buildPackState(pack: Pack, hasPremiumAccess: boolean) {
   const premiumActive = appConfig.premiumUiEnabled;
   const requiresPremium = premiumActive && Boolean(pack.requiresPremium);
-  const promoOnly = Boolean(pack.promoOnly);
   const comingSoon = pack.cards.length === 0;
-  const locked = promoOnly || (requiresPremium && !hasPremiumAccess);
+  const locked = requiresPremium && !hasPremiumAccess;
   const playable = !comingSoon && !locked;
 
-  return { requiresPremium, promoOnly, comingSoon, locked, playable };
+  return { requiresPremium, comingSoon, locked, playable };
 }
 
 export default function App() {
@@ -149,10 +143,6 @@ export default function App() {
   const [matchMoves, setMatchMoves] = useState(0);
   const [hasPremiumAccess, setHasPremiumAccess] = useState(false);
   const [, setPremiumProduct] = useState<PremiumProduct | null>(null);
-  const [promoPack, setPromoPack] = useState<Pack | null>(null);
-  const [showParentGate, setShowParentGate] = useState(false);
-  const [parentGateValue, setParentGateValue] = useState("");
-  const [parentGateError, setParentGateError] = useState("");
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
   const suppressFlashcardTapRef = useRef(false);
@@ -183,23 +173,12 @@ export default function App() {
     [packStates],
   );
 
-  const lockedPromoPacks = useMemo(
-    () =>
-      packStates.filter(({ state }) => state.promoOnly).map(({ pack }) => pack),
-    [packStates],
-  );
-
   const selectedPack =
     playablePacks.find((pack) => pack.id === selectedPackId) ??
     playablePacks[0];
 
   const currentSection =
     sections.find((section) => section.id === gameMode) ?? sections[0];
-  const forcedPromoPack =
-    screenshotScene === "locked-colors"
-      ? packs.find((pack) => pack.id === "colors") ?? null
-      : null;
-  const activePromoPack = promoPack ?? forcedPromoPack;
 
   const currentCard = selectedPack?.cards[currentCardIndex];
   const canGoBack = currentCardIndex > 0;
@@ -274,14 +253,10 @@ export default function App() {
     setIsFlashcardFlipped(false);
     setFlippedTileIds([]);
     setMatchMoves(0);
-    setShowParentGate(false);
-    setParentGateValue("");
-    setParentGateError("");
 
     if (screenshotScene === "home") {
       setGameMode("flashcards");
       setPageView("home");
-      setPromoPack(null);
       return;
     }
 
@@ -289,7 +264,6 @@ export default function App() {
       setSelectedPackId("animals");
       setGameMode("flashcards");
       setPageView("detail");
-      setPromoPack(null);
       return;
     }
 
@@ -297,14 +271,6 @@ export default function App() {
       setSelectedPackId("animals");
       setGameMode("match");
       setPageView("detail");
-      setPromoPack(null);
-      return;
-    }
-
-    if (screenshotScene === "locked-colors") {
-      setGameMode("flashcards");
-      setPageView("home");
-      setPromoPack(packs.find((pack) => pack.id === "colors") ?? null);
     }
   }, [screenshotScene]);
 
@@ -346,16 +312,6 @@ export default function App() {
   };
 
   const handleOpenPack = (pack: Pack) => {
-    const packState = buildPackState(pack, hasPremiumAccess);
-
-    if (packState.promoOnly) {
-      setPromoPack(pack);
-      setShowParentGate(false);
-      setParentGateValue("");
-      setParentGateError("");
-      return;
-    }
-
     resetGameState(pack.id);
     startTransition(() => {
       setPageView("detail");
@@ -364,33 +320,6 @@ export default function App() {
 
   const handleBackHome = () => {
     setPageView("home");
-  };
-
-  const handleClosePromoModal = () => {
-    setPromoPack(null);
-    setShowParentGate(false);
-    setParentGateValue("");
-    setParentGateError("");
-  };
-
-  const handleContinueToParentGate = () => {
-    setShowParentGate(true);
-    setParentGateValue("");
-    setParentGateError("");
-  };
-
-  const handleOpenFullVersion = () => {
-    if (parentGateValue.trim().toUpperCase() !== appConfig.parentGateAnswer) {
-      setParentGateError("Please ask a parent to type the confirmation word.");
-      return;
-    }
-
-    window.open(
-      appConfig.fullVersionAppStoreUrl,
-      "_blank",
-      "noopener,noreferrer",
-    );
-    handleClosePromoModal();
   };
 
   const handlePrevious = () => {
@@ -746,13 +675,10 @@ export default function App() {
 
       <section className="card-grid-panel">
         <div className="home-card-grid">
-          {[...playablePacks, ...lockedPromoPacks].map((pack) => {
+          {playablePacks.map((pack) => {
             const packState = buildPackState(pack, hasPremiumAccess);
-            const footerLabel = packState.promoOnly
-              ? "FULL VERSION"
-              : gameMode === "flashcards"
-                ? "FLASH CARDS"
-                : "PAIR GAMES";
+            const footerLabel =
+              gameMode === "flashcards" ? "FLASH CARDS" : "PAIR GAMES";
             const previewCards =
               pack.cards.length > 0
                 ? [
@@ -765,21 +691,16 @@ export default function App() {
             return (
               <button
                 key={`${gameMode}-card-${pack.id}`}
-                className={`home-card${packState.promoOnly ? " locked" : ""}`}
+                className="home-card"
                 onClick={() => handleOpenPack(pack)}
                 type="button"
-                aria-label={`${pack.title} pack${packState.promoOnly ? ", locked" : ""}`}
+                aria-label={`${pack.title} pack`}
               >
                 <div className={`home-card-body tint-${pack.id}`}>
                   <div className="home-card-header">
                     <p className="home-card-kicker">
                       {gameMode === "flashcards" ? "Flashcards" : "Pair Games"}
                     </p>
-                    {packState.promoOnly ? (
-                      <span className="home-card-badge" aria-label="Locked pack">
-                        🔒
-                      </span>
-                    ) : null}
                   </div>
                   <h3>{pack.title}</h3>
                   <p className="home-card-description">{pack.description}</p>
@@ -871,72 +792,6 @@ export default function App() {
         </main>
       )}
 
-      {activePromoPack ? (
-        <div className="gate-overlay" role="presentation">
-          <section
-            className="gate-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="locked-pack-title"
-          >
-            {!showParentGate ? (
-              <>
-                <p className="premium-kicker">Full Version</p>
-                <h2 id="locked-pack-title">{activePromoPack.title} is locked</h2>
-                <p>
-                  {activePromoPack.title} is available in the full version of the app.
-                  This free edition includes starter packs only.
-                </p>
-                <p>
-                  Ask a parent if you want to open the App Store page for the
-                  full version.
-                </p>
-                <div className="gate-actions">
-                  <button onClick={handleClosePromoModal} type="button">
-                    Not now
-                  </button>
-                  <button onClick={handleContinueToParentGate} type="button">
-                    Ask a parent
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <p className="premium-kicker">Parents Only</p>
-                <h2 id="locked-pack-title">Open the full version</h2>
-                <p>
-                  To continue, type{" "}
-                  <strong>{appConfig.parentGateAnswer}</strong> below and then
-                  open the App Store page.
-                </p>
-                <input
-                  className="gate-input"
-                  value={parentGateValue}
-                  onChange={(event) => {
-                    setParentGateValue(event.target.value);
-                    setParentGateError("");
-                  }}
-                  placeholder="Type the confirmation word"
-                  aria-label="Parent confirmation word"
-                />
-                {parentGateError ? (
-                  <p className="gate-error" aria-live="assertive">
-                    {parentGateError}
-                  </p>
-                ) : null}
-                <div className="gate-actions">
-                  <button onClick={handleClosePromoModal} type="button">
-                    Cancel
-                  </button>
-                  <button onClick={handleOpenFullVersion} type="button">
-                    Open full version
-                  </button>
-                </div>
-              </>
-            )}
-          </section>
-        </div>
-      ) : null}
     </div>
   );
 }

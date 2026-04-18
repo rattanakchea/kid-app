@@ -193,3 +193,11 @@ can you get them for me
 ### Prompt 039
 
 I enabled this. Driving the simulator directly is blocked by macOS accessibility settings. I’m switching to a more reliable path: a small screenshot-state hook in the app so I can build exact scenes and capture them cleanly in the native simulator without manual tapping. please proceed to get 4 screenshots.
+
+## 2026-04-17
+
+### Prompt 040
+
+Resolve Guideline 2.1(b) by Removing Paid-Content References
+Summary
+Use the fastest approval path: submit a new binary that contains no references to a paid full version, no locked premium placeholders, and no outbound App Store link for extra content. Do not try to rescue this submission by submitting IAP now unless you specifically want to ship paid unlocks in this release.

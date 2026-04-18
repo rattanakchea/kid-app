@@ -13,8 +13,6 @@ export type Pack = {
   id: string;
   title: string;
   description: string;
-  locked?: boolean;
-  promoOnly?: boolean;
   requiresPremium?: boolean;
   modes?: ("flashcards" | "match")[];
   cards: Card[];
@@ -260,26 +258,5 @@ export const packs: Pack[] = [
       { id: "tomato", name: "Tomato", emoji: "🍅" },
       { id: "green-apple", name: "Green Apple", emoji: "🍏" },
     ],
-  },
-  {
-    id: "colors",
-    title: "Colors",
-    description: "Available in the full version with more bright vocabulary play.",
-    promoOnly: true,
-    cards: colorCards,
-  },
-  {
-    id: "shapes",
-    title: "Shapes",
-    description: "Unlock common shapes in the full version.",
-    promoOnly: true,
-    cards: shapeCards,
-  },
-  {
-    id: "parts-of-body",
-    title: "Parts of Body",
-    description: "Learn body-part words in the full version.",
-    promoOnly: true,
-    cards: bodyPartCards,
   },
 ];

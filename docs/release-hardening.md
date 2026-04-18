@@ -45,7 +45,7 @@ This branch should always validate against its own app identity and starter-only
 - Pair matching remains centered and touch-friendly.
 - No purchase, restore, or parent-gate UI is visible in the shipped flow.
 - Only starter packs appear in the home screen and detail flows.
-- Locked placeholder packs may appear, but any outbound full-version link must stay behind the parent gate.
+- No locked placeholder packs or external upgrade links appear anywhere in the app.
 
 ## App Review / Kids Category Checks
 
@@ -53,7 +53,7 @@ This branch should always validate against its own app identity and starter-only
 - No third-party analytics SDKs in the first release.
 - No child-facing outbound links in the main play flow.
 - Privacy and support pages use production HTTPS URLs before submission.
-- App Store metadata does not promise purchase features that are not visible in the app.
+- App Store metadata does not mention locked content, a full version, or an upgrade path.
 
 ## Metadata To Finalize
 

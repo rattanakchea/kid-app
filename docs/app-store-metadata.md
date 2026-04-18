@@ -29,12 +29,14 @@ Simple, kid-friendly flashcards and matching games for short daily learning sess
 
 ## Keywords
 
-kids,flashcards,matching,preschool,toddler,learning,colors,animals,fruits
+kids,flashcards,matching,preschool,toddler,learning,animals,fruits,first words
 
 ## Review Notes
 
 - The app uses bundled web assets inside a Capacitor iOS shell.
-- All visible content in the first iOS release is playable without purchase.
+- This version contains only the included starter learning packs.
+- No in-app purchase flow is exposed in the app.
+- No external purchase or full-version link is exposed in the child-facing experience.
 - No third-party ads are included.
 - No third-party analytics SDKs are included in the first iOS release.
 
