@@ -201,3 +201,10 @@ I enabled this. Driving the simulator directly is blocked by macOS accessibility
 Resolve Guideline 2.1(b) by Removing Paid-Content References
 Summary
 Use the fastest approval path: submit a new binary that contains no references to a paid full version, no locked premium placeholders, and no outbound App Store link for extra content. Do not try to rescue this submission by submitting IAP now unless you specifically want to ship paid unlocks in this release.
+
+### Prompt 041
+
+apple store issue
+ssue Description
+
+We noticed that the app icon is identical to the icons of other apps already submitted to the App Store.
