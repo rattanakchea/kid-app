@@ -179,7 +179,6 @@ export default function App() {
 
   const currentSection =
     sections.find((section) => section.id === gameMode) ?? sections[0];
-
   const currentCard = selectedPack?.cards[currentCardIndex];
   const canGoBack = currentCardIndex > 0;
   const canGoForward =
